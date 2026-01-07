@@ -44,11 +44,11 @@
 Roboter in der Industrie, insbesondere der Fertigungstechnik, sind für Unternehmen essenziell geworden und reduzieren hohe Kosten durch Fachkräfte, erhöhen die Zeiteffizienz und sind in Zeiten der Industrie 4.0 weit etabliert.
 Dies lässt sich am Beispiel der Automobilindustrie veranschaulichen, in der Firmen wie KUKA bereits weit verbreitet mit ihren Automatisierungslösung sind.
 Dort werden hochautomatisierte Produktionsketten als Lösung angeboten, die hauptsächlich auf Flexible Robotik setzen, in denen Roboterarme Aufgaben wie Montage, Schweißen oder Lackierung übernehmen [Quelle].
-Laut einer Analyse der International Federation of Robotics (IFR) erreichte der weltweite operative Bestand an Industrierobotern zuletzt mit rund einer Million Einheiten einen neuen Höchststand (2023) [Quelle einfügen].
+Laut einer Analyse der International Federation of Robotics (IFR) erreichte der weltweite operative Bestand an Industrierobotern zuletzt mit rund einer Million Einheiten einen neuen Höchststand (2023) @robotics_international_nodate.
 
 Trotz der guten Etablierung weisen diese Lösungen dennoch Nachteile bezüglich Feinmotorik, kontaktreicher und dynamischer Aufgaben auf. Die oben genannten Lösungen basieren meist auf statischen Regelwerken und gehen von
 deterministischen Abläufen aus. Tauchen in der Produktionskette kleinere Fehler auf, müssen diese meist durch Eingriffe von Menschen behoben werden, da klassische Robotiksysteme keine "intelligente" Reaktion auf derartige Probleme geben.
-Eine Lösung zur statischen Programmierung und festen Regelwerken, könnte die Informatik liefern. Die vorliegende Arbeit untersucht das Paper (Titel) von (Autoren) liefert eine Lösung, die Konzepte aus der Informatik wie
+Eine Lösung zur statischen Programmierung und festen Regelwerken, könnte die Informatik liefern. Die vorliegende Arbeit untersucht das [Quelle] liefert eine Lösung, die Konzepte aus der Informatik wie
 Markowsche-Entscheidungsprobleme, Reinforcement Learning und neuronale Netze verwendet. Alle genannten Konzepte sind in der Informatik moderne Technologien und erfordern tiefes Wissen aus der Informatik.
 
 Das Paper postuliert eine mögliche Lösung von Robotern, in der Präzisionsarbeit durch intelligente visuelle Verarbeitung von räumlicher Umgebung und "Human-in-the-Loop" Reinforcement Learning erzielt wird. Dabei werden
@@ -93,8 +93,15 @@ Um dies auf das Paper zu übertragen, nutzen wir dessen formale Definition eines
 - *$gamma$ (Discount Factor)*: Dies ist der Gewichtungsfaktor $(0 ≤ γ < 1)$, der bestimmt, wie wichtig zukünftige Belohnungen im Vergleich zu sofortigen sind. Ein $γ$ nahe 0 macht den Agenten "kurzsichtig" (nur der nächste Reward zählt),     
   während ein $γ$ nahe 1 den Agenten "weitsichtig" macht (langfristige Ziele wie "Pass" werden wichtiger als kurzes Facebook-Vergnügen). Im der Vorlesung von David Silver wurden beide Beispiele einmal gezeigt, wobei ein $gamma = 0$ in einer Facebook-Schleife verfiel und ein $gamma = 1$ in "Pass" überging.
 
-Hat man nun ein MDP formuliert, gilt es dieses zu lösen, wobei die Lösung bei einem Optimierungs-/Maximierungsproblem der höchstmögliche Wert beschreibt, in unserem Fall der Reward $R$. Die gängiste Vorgehensweise bei dem lösen von MDP ist
-das Aufstellen einer Strategie, einer sogenannten *Policy $pi$*. Eine Policy $pi$ hat den Vorteil, an jeder Stelle des Graphen ein klares Regelwerk zu besitzen, während "feste Routen" viele Nachteile aufweisen (Graph zu groß/unendlich, mehrere Startpunkte = mehrere Routen). 
+Hat man nun ein MDP formuliert, gilt es dieses zu lösen, wobei die Lösung bei einem Optimierungs-/Maximierungsproblem der höchstmögliche erreichbare Wert beschreibt, in unserem Fall der Reward $R$. Die gängiste Vorgehensweise bei dem lösen von MDP ist
+das Aufstellen einer Strategie, einer sogenannten *Policy $(pi)$*. Eine Policy $(pi)$ hat den Vorteil, an jeder Stelle des Graphen ein klares Regelwerk zu besitzen, während "feste Routen" viele Nachteile aufweisen (Graph zu groß/unendlich, mehrere Startpunkte = mehrere Routen). Genau genommen wird eine optimale Policy $(pi)$ gesucht.
+Auf unser Bespiel bezogen, wird versucht eine Policy $(pi)$ gesucht, die den höchstmöglichen Wert in $ E [ sum_(t=0)^h gamma^t R(s_t, a_t) ] $ findet.
+Da die Übergänge zwischen den Zuständen stochastisch und dementsprechend Unsicherheiten vorhanden sind, bilden wir den Erwartungswert aller möglichen Verläufe.
+Das $gamma$ dient hier wie bereits angedeutet als Diskontierungsfaktor, der je nach Wahl über Zeitschritte $t$ die Gewichtung immer kleiner bis nahe 0 einfließen lässt.
+Die Rewardfunktion mit $R(s_t, a_t)$ definiert für den derzeitigen Zustand $s_t$ unter der Handlung $a_t$ den Reward $R$. Dieser wird dann bis zum Angegebenen Horizont $h$ akkumuliert. 
+
+Für das Beispiel eines Studentenleben ist eine optimale Policy $(pi)$ einfach zu bestimmen. Mithilfe vom Bellman'sche Optimalitätsprinzip kann mit Backtracking ein eindeutiger optimaler Pfad bestimmt werden. Das Prinzip besagt, dass sich bei einigen Optimierungsproblemen jede Optimallösung aus optimalen Teillösungen zusammensetzt [Quelle]. Daraus folgt, dass der optimale Pfad das strikte lernen von "Class 1" bis "Pass". 
+
 == Actor-Learner-Modell
 Kurze Erklärung des Modells: Der Actor interagiert mit der Welt, der Learner optimiert das Netz im Hintergrund. Effizienz und Stabilität.
 
@@ -124,4 +131,4 @@ Ehrlich gesagt kauf ich das Paper nicht ganz ab. Aber mal schauen.
 // LITERATURVERZEICHNIS
 // ==========================================
 #pagebreak()
-// #bibliography("literatur.bib") // Du brauchst eine Datei namens literatur.bib
+#bibliography("Proseminar.bib") // Du brauchst eine Datei namens literatur.bib

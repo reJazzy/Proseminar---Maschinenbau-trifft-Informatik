@@ -177,22 +177,38 @@ Der Actor leitet den Roboter unter der Berücksichtigung des Critics und eigener
 
 = Der Lernalgorithmus: RLPD mit "Human-in-the-Loop"
 
+Wie bereits ausführlich erklärt, ist es nicht möglich einem Roboter, der derart feinmotorische und milimetergenaue Montageaufgaben bewältigen soll, statisch zu programmieren. Deshalb wurde im Paper Reinforcement Learning als Lösung genommen, in der ein Algorithmus selbständig lernt eine Strategie (Policy) zu entwickeln, die ihm vorgibt in einer Situation (Zustand) eine nahezu ideale Aktion vorzunehmen. Jedoch sind selbst klassische RL-Ansätze, wie auch der hier zugrundeliegende *SAC-Ansatz (Soft Actor Critc)* meist nicht ausreichend, um praxistauglich eingesetzt werden zu können. Grund dafür ist das das Erlernen einer Strategie oft Wochen von Laufzeit erfordert. Dateneffizienz ist bereits seit langer Zeit ein Problem beim Reinforcement Learning. Die Autoren bedienen sich dafür einer Erweiterung des SAC-Ansatzes, der sich rund um die Nutzung von Demonstrationen dreht. Der Algorithmus *RLPD (Reinforcement Learning with Prior Data)*, der in diesem Paper verwendet wurde, addressiert das Problem der Dateneffizienz, indem es bereits mit Vorkenntnissen der angepeilten Lösung arbeitet. Der größte Vorteil dabei ist, dass der RL-Algorithmus nicht von selbst die Richtung der Strategie erlernen muss, sondern bereits durch die Demos, in die Richtung der gewollten Strategie gedrückt wird. Die Struktur des Actor-Critic-Ansatzes wurde bereits ausführlich im MDP-Abschnitt behandelt. Im folgenden wollen wir uns mit den hier genutzten Besonderheiten des RLPD mit menschlichen Eingriffen beschäftigen. Zuerst wird  Dafür wird zuerst der allgemeine RLPD Ansatz aus einem Paper [Quelle] betrachtet, auf den sich auch die Autoren stützen. Aufbauend darauf wird die Umsetzung betrachtet, Darunter fällt die Bereitstellung der Demos und wie diese in den RLPD eingebunden werden und anschließend auf die "Human-in-the-Loop" Umsetzung eingenagen.
 
+== Effizientes Reinforcement Learning mit offline Daten [Quelle]
+
+Deep Reinforcement Learning (RL) konnte in vielen Feldern bereits Erfolge verzeichnen wie in Atari [Quelle] oder Go [Quelle].
+In diesen Beispielen werden hohe Erfolge durch Reinforcement Learning und viele Online Interaktionen erzielt, dass durch Simulationen gut umsetzbar ist. Leider sind Probleme in der Realität oft deutlich komplexer, als in einer Simulation. Rewards sind meist absthrahiert, während sie in der Realität schwer greifbar und hochdimensional sind. Die Autoren des Papers [Quelle] postulieren den Ansatz von *RLPD*. Dieser Unterscheidet sich von Deep RL und SAC + Offline Daten in der Form von vier Erweiterungen:
+- *Hybdrid Replay-Buffer-System:* Beim RLPD werden statt einem Buffer, zwei genutzt. Einen für unsere Online Daten, die der RL Algorithmus selbst erstellt und ein zweiter Offline Buffer, indem menschliche Demos oder große Mengen suboptimaler Daten liegen. Diese Trennung hat den Vorteil, dass Daten nicht vermischt werden, wodurch die Offline Daten nicht in der Masse der entstehenden Online Daten verloren gehen. 
+- *Replay Ratio Sampling:* Das ziehen von Batches aus bereits vorhandenen Daten ist essenziell zum lernen von RL-Algorithmen. Da zwei Buffer vorhanden sind, besteht ein Batch zwingend aus 50% der Online Daten und 50% Offline Demos. Dadurch bleibt die Gewichtung ausgeglichen zwischen den beiden Datenmengen.
+- *Layer Normalization:* Da die Daten aus unterschiedlichen Quellen kommen können, ist eine Normierung der Daten wichtig. Ansonsten kann es passieren, dass der Critic divergiert, indem er sich an immer höherwerdene Werte versucht anzupassen, die aufgrund von Überschätzung des Critcs der Daten ausgeht [Quelle].
+
+Aufbauend auf diesem theoretischen Gerüst implementieren Liu und Wang spezifische Komponenten, um den Algorithmus für die Montageaufgabe nutzbar zu machen. Dies umfasst eine visuelle Belohnungsfunktion und die Einbindung menschlicher Korrekturen.
+
+== Reward Classifier
+
+Der Reward oder Binary Classifier ist zuständig für die Bewertung von Montageabläufen, sowohl vor, als auch während dem Lernprozess. Der Classifier selbst ist ebenfalls ein Neuronales Netz, dass mit einer Wahrscheinlichkeit, eine binäre Zuweisung von Erfolg (1) und Misserfolg (0) bewertet. 
+
+Der Classifier selbst wird mit 100 erfolgreichen und 1300 fehlgeschlagen Datenpunkten traniert. Datenpunkte beschreibt hier die visuelle Übersetzung eines RGB-Bildes über ResNet-10 (Convolutional Neural Network) in räumliche Merkmale, in Form von Vektoren. Mit diesen Vektoren wird der Classifier über 100 Epochen und einem Adam Optimiser traniert, worauf hin dateneffizient und mit hoher Genaugikeit, der Classifier nun für das eigentliche RL-Policy Traning verwendet werden konnte.
+
+
+
+// #figure(
+//   image("1-s2.0-S0007850625000642-gr1_lrg.jpg", width: 80%),
+//   caption: [
+//     Arbeitsablauf der Bildverarbeitung und RL-Architektur
+//   ],
+// )
+
+// Der offline Buffer wird für jede Montageaufgabe mit 30 Trajektorien, in denen menschlich manuell die Aufgabe erfüllt wurde, geladen. Dabei wird streng eine Montage als Erfolgreich klassifiziert, wenn die Zielposition des Bauteils und die tatsächliche Position $< 0.1"mm"$ ist. Außerdem muss der Binary Classifier ebenfalls 
+
+== Replay-Buffer
 
 == Mensch als Korrektiv
-
-== Vision-Encoder
-Kurz auf ResNet-10 eingehen und das ein CNN zugrunde liegt. Verwandelt Pixel der Kamera in kompakte Vektoren, die das RL Netz verwerten kann.
-
-= Schnittstelle zur Physik: Impedanzregelung
-Neuronales Netz steuert Roboter nicht hart, sondern gibt Ziele vor. Ein Impedance Controller beobachtet und gleicht Position und Kraft ab, damit nichts kaputt geht.
-Dient als Sicherheitslayer.
-
-Besonders wichtig ist die *Impedance Control*, die den Roboter "weich" macht. Die Formel für die Kraft $F$ ist:
-
-$ F = k_p (p_c - p_t) + k_d (v_c - v_t) $
-
-Dabei ist $k_p$ die Federsteifigkeit (Stiffness).
 
 = Evaluation
 Ehrlich gesagt kauf ich das Paper nicht ganz ab. Aber mal schauen.

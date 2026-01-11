@@ -71,13 +71,11 @@ Ein MDP lässt sich als gerichteter Graph modellieren, wobei die Knoten als Zust
 Zum besseren Verständnis wird ein bekanntes Beispiel aus der Vorlesung von David Silver (DeepMind / UCL) betrachtet: Der beschriebene Graph [Abbildung 1] modelliert den Studienalltag @google_deepmind_rl_2015.
 
 #figure(
-  image("student_mdp.png", width: 80%),
+  image("1_Pc0d35FGiksR31ySXoXv5A.png", width: 80%),
   caption: [
     Optimal Action-Value Function for Student MDP - David Silver @google_deepmind_rl_2015.
   ],
 ) <fig-mpd-graph>
-
-*FALSCHER GRAPH*
 
 Um seinen Kurs bestehen zu können, müssen Studenten alle drei "Class"-Zustände erfolgreich durchlaufen. Die Kreise repräsentieren hierbei die Zustände, wobei der Zustand "Class 1" hier als Start-Zustand dient. 
 In diesem Zustand kann der Agent (Student) nun eine Handlung wählen, entweder "Facebook" oder "Study". Wählt er "Study", folgt eine Transition, die mit einer Wahrscheinlichkeit behaftet ist (in dem Fall implizit 1.0/100%). 
@@ -112,7 +110,7 @@ Ein Blick auf [@fig-mpd-graph] verdeutlicht dies am Zustand "Class 3":
 - Der Wert für Lernen ist $Q_*("Class 3", "Study") = 10$.
 - Der Wert für die Kneipe ist $Q_*("Class 3", "Pub") = 8.4$.
 Da $10 > 8.4$ ist, ist die Handlung "Study" hier die optimale Wahl. Die Policy $(pi_*)$ wählt also stets gierig ("greedy") das Maximum über $Q_*$. Ein bekanntes Vorgehen für das bestimmen von $Q_*$ in allen Zuständen ist der Beginn am Ende und zurückschauen
-in Vorgängerzuständen @google_deepmind_rl_2015. Nachdem vereinfacht ausgedrückten Bellmann'schen Optimalitätsprinzip gilt nämlich, dass jede Teilpolicy $pi_"sub"$ einer optimalen Policy $pi_*$, auch optimal ist *QUELLE FÜR BELLMANN*. 
+in Vorgängerzuständen @google_deepmind_rl_2015. Nachdem vereinfacht ausgedrückten Bellmann'schen Optimalitätsprinzip gilt nämlich, dass jede Teilpolicy $pi_"sub"$ einer optimalen Policy $pi_*$, auch optimal ist @google_deepmind_rl_2015. 
 Zur Veranschaulichung: Wenn die kürzeste ICE Strecke von Berlin nach München, über Leipzig ist, dann ist die kürzeste Strecke von Leipzig nach München, die gleiche. 
 Aufgrund dieser Eigenschaft können wir das Problem beginnend vom Ende lösen, da die kürzeste Strecke von München nach München trivial und bekannt ist. 
 Man beginnt in den terminierenden Zuständen (z.B. "Sleep" mit Wert 0) und berechnet die Werte der davorliegenden Zustände rekursiv rückwärts.
@@ -155,7 +153,7 @@ Dabei besteht ein Neuronales Netz aus unterschiedlichen Schichten, einem Input L
 #figure(
   image("neural_network.jpg", width: 50%),
   caption: [
-    Neural Network - *ÜBERARBEITUNG NÖTIG*
+    Neuronales Netzt mit drei Layer Ebene - @yau_estimation_2024
   ],
 )
 
@@ -189,7 +187,7 @@ Denn die Maximierung vom Reward, also dem Suchen eines globalen Optimus einer Fu
 Der Teil, der die Gier des Actors steuert, ist in diesem Teil enthalten: $E_(a ~ pi_theta (theta)) [Q_phi (s, a)]$. Das $a ~ pi_theta (theta)$ hat dabei eine relativ wichtige Bedeutung. 
 Es ist mathematisch nicht möglich, Rückpropagierung (Backpropagation) in einem neuronalen Netz zu betreiben, wenn Stochastik zugrundeliegt. 
 Denn aus einem Sample $a$ können keine Rückschlüsse zur Zufallsverteilung gezogen und plausible Anpassungen am Neuronalen Netz vorgenommen werden. 
-Die Autoren bedienen sich hier dem Trick der *Reparametrisierung (Reparameterization)*, indem grob gesagt der Zufall in ein Standard-Rauschen $epsilon.alt$ ausgelagert wird, wodurch der stochatischen Sample, differenzierbar wird *QUELLE ZU REPARAMETRIESIERUNG*. 
+Die Autoren bedienen sich hier dem Trick der *Reparametrisierung (Reparameterization)*, indem grob gesagt der Zufall in ein Standard-Rauschen $epsilon.alt$ ausgelagert wird, wodurch der stochatischen Sample, differenzierbar wird @kingma_auto-encoding_2022. 
 Durch diesen Trick kann über dem Critic $Q_phi$, der Actor $Q_pi$ lernen, sich anzupassen. Der zweite Teil der Funktion $tau Phi(pi_theta ( . | s))$ ist zuständig für die Exploration. 
 Damit wird vorgebeut, dass sich der Actor nicht zu früh in einer approximierten Lösung festsetzt, sondern nach anderen, eventuell besseren sucht. 
 Der Hyperparameter $tau$ (Temperatur) steuert dabei die Balance: Ein hohes $tau$ fördert Exploration, während ein niedriges $tau$ die Policy stärker auf die Nutzung des besten bekannten Weges (Exploitation) fokussiert. 
@@ -212,7 +210,7 @@ Im folgenden werden wir die Motivation hinter diesen Erweiterungen anschauen und
 Beim klassischen Deep Reinforcement Learning kommt die Dauer des Lernprozesses vor allem aus der Anfangsphase, in denen der Algorithmus erst eine gewisse Richtung ermitteln muss, in der sich die optimale Policy befindet. 
 Die Richtungfindung, kann aber minimiert werden, indem beim Deep RL im vorraus bereits suboptimale Policies oder menschliche Demonstrationen die Richtung vorgeben. Mit einher gehen jedoch Probleme mit diesen Demonstrationen. 
 Während der RL-Algorithmus lernt, werden in kurzer Zeit bereits eine Vielzahl von Druchläufen in den Replay-Buffer, den Speicher, in dem alle Epochen gespeichert werden, geladen und überwiegen schnell die Anzahl an selbstgelandener Daten. 
-Die Autoren Ball et. al. erkannten das ebenfalls und entwarfen basierend auf Ross & Bagnell (2012) eine symmetrische Replay-Buffer Architeuktur *HIER QUELLE AUS BALL PAPER*. 
+Die Autoren Ball et. al. erkannten das ebenfalls und entwarfen basierend auf Ross & Bagnell (2012) eine symmetrische Replay-Buffer Architeuktur @ross_agnostic_2012. 
 Dabei werden statt nur einem Replay-Buffer, zwei Buffer angelegt, wobei einer die Online Daten des RL-Algorithmus speichert und aufnimmt und einem Offline Buffer, der als Beispiel die eben genannten menschlichen Demonstrationen, speichert. 
 Das hat vor allem den Vorteil, dass unter der schnell groß werdenen Menge an RL-Abläufen, die vorgefertigten Richtungsgeber nicht untergehen. 
 Damit aber auch beim Samplen die Gewichtung erhalten bleibt, wird aus beiden Buffern die gleiche Menge an Daten entnommen, genau genommen jeweils 50%. 
@@ -223,7 +221,7 @@ Dieses Vorgehen des symmetrischen Samples wird auch von Liu & Wang verwendet, wi
 #figure(
   image("1-s2.0-S0007850625000642-gr3_lrg.jpg", width: 80%),
   caption: [
-    Arctor-Learner Architektur mit zwei Buffern
+    Arctor-Learner Architektur mit zwei Buffern - @liu_vision_2025
   ],
 ) <fig-arctor-critc-architecture>
 
@@ -240,7 +238,7 @@ Eine fundamentale Schwäche von Deep Reinforcement Learning ist der Umgang mit u
 Dabei passiert es, dass der Critic die neuen eingehenden Daten stark "überschätzt", da dieser die Daten mit den Offline Daten aus dem Demo-Buffer in Beziehung bringt. 
 Folge daraus in der Praxis sind Instabilitäten im Traning und *Divergierung des Critics (Overestimation)*, während er versucht den immer größer werdenen Werten zu folgen @thrun_issues_1994. 
 Die Lösung von Ball et al. nutzt Normalisierung der Werte innerhalb des Neuronalen Netzes, damit Werte innerhalb eines Zahlenbereiches (meist mit einem Mittelwert $mu = 0$ und Standardabweichung $sigma = 1$) bleiben. 
-Dabei ist es möglich, dass der RL-Ansatz mit Layer Normalization trotzdem neues lernen kann, ohne zu stark von den Demo Daten limitiert zu sein *QUELLE AUS BALL PAPER*. 
+Dabei ist es möglich, dass der RL-Ansatz mit Layer Normalization trotzdem neues lernen kann, ohne zu stark von den Demo Daten limitiert zu sein @ba_layer_2016. 
 Mathematisch wurde das wie folgt bewiesen und umgesetzt: $norm(Q(s, a)) <= norm(w)$ @ball_efficient_nodate. 
 Dies bedeutet, dass der vorhergesagte $Q$-Wert niemals größer werden kann als die Norm der Netzwerkgewichte $w$.
 
@@ -251,7 +249,7 @@ $ cal(L)_Q (phi) = E_(s,a,s') [ ( Q_phi (s, a) - (R (s, a) + gamma E_(a' ~ pi_th
 
 Diese Funktion minimiert lediglich die Differenz zwischen der Vorhersage $Q_phi$ und dem Zielwert $Q_pi$. Sie beinhaltet jedoch keinen Mechanismus, der das Netzwerk vor der erwähnten *Overestimation* bei unbekannten Daten schützt. 
 Die Stabilisierung muss daher strukturell innerhalb der Funktion $Q_phi (s, a)$ selbst erfolgen. 
-Während Ball et al. [Quelle] hierfür explizit *Layer Normalization* vor der letzten Ausgabeschicht vorschreiben ($norm(Q) <= norm(w)$), lassen Liu und Wang die genaue Innenarchitektur ihres Critics im Paper unerwähnt. 
+Während Ball et al. hierfür explizit *Layer Normalization* vor der letzten Ausgabeschicht vorschreiben ($norm(Q) <= norm(w)$), lassen Liu und Wang die genaue Innenarchitektur ihres Critics im Paper unerwähnt. 
 Es ist möglich, dass die Autoren sich hier implizit auf die Beschaffenheit des *Reward Classifiers* verlassen, der den Reward hart auf das Intervall $[0, 1]$ begrenzt. 
 Unter der Annahme, dass sie die RLPD-Methodik vollständig adaptiert haben, ist der Einsatz dieser Normalisierungsschichten zwingend erforderlich, da der Critic sonst bei der Verarbeitung der Daten aus den zwei Buffern zur Divergenz neigen würde. 
 
@@ -259,7 +257,7 @@ Unter der Annahme, dass sie die RLPD-Methodik vollständig adaptiert haben, ist 
 
 Die Designentscheidung eines zweiten Offline Buffers führt dazu, dass Sampling aufwendiger wird. Zur Minimierung des Aufwands wird die Geschwindigkeit der Lernprozesses modifiziert, um Effizienz beizubehalten. 
 Eine Möglichkeit dabei ist es den UTP-Wert zu erhöhen, den Wert der vorgibt, wie viele Lernschritte (Critic passt Gewichte an) pro Arbeitsschritt (Actor führt Handlung aus) durchführt werden. 
-Jedoch läuft man damit Gefahr, dass der RL-Algorithmus in *Überanpassung (Overfitting)* verfällt. Die Überanpassung beschreibt einen Zustand, indem ein Modell sich zu stark an einem lokalen Optimum angepasst hat und irrelevante Faktoren berücksichtigt *QUELLE ZU OVERFITTING*.
+Jedoch läuft man damit Gefahr, dass der RL-Algorithmus in *Überanpassung (Overfitting)* verfällt. Die Überanpassung beschreibt einen Zustand, indem ein Modell sich zu stark an einem lokalen Optimum angepasst hat und irrelevante Faktoren berücksichtigt @noauthor_what_2021.
 Zum besseren Verständnis wird als veranschaulichtes Beispiel oft der Unterschied zwischen "Verstehen" und "Auswendig lernen" aufgewiesen. 
 Wenn ein RL-Algorithmus zu exakt gerlernt hat, eine Aufgabe zu lösen, sorgt der Zustand der Überanpassung dafür, dass die spezifisch gelernte Aufgabe mit einer hohen Genaugikeit gelöst wird, jedoch bei leichten Änderungen bereits scheitert. 
 Als Lösung dafür nennen Ball et. at. einige Möglichkeiten, wobei sie sich für die Methoden mit *Random Ensemble Distillation* und *Random Shift Augmentations* entscheiden. 
@@ -271,12 +269,18 @@ Indizien für Overfittingprävention im Paper von Liu & Wang geht vor allem herv
 Sie nutzen dafür ein vortraniertes ResNet-10 Netzwerk zur Bilderkennung, dass bereits schon auf Millionen von Daten traniert wurde, wodurch davon auszugehen ist, dass dieses bereits gegen Overfitting besteht. 
 ResNet-10 ist eine vereinfachte Version des bekannten ResNet, dass Bilder auf relevante Daten extrahiert, mit denen viele RL-Algorithmen arbeiten können @gong_resnet10_2022. 
 Im Paper werden die Kamerabilder des Robters ins ResNet gesetzt, wodurch das Problem der geringen Datenmenge aus 1400 Bildern, vorgebeugt wird. 
-Diese Daten werden dann in den Binary Classifier eingespeist, der dann Abläufe des Actors bewertet und mit in die Learner-Architektur liefert *HIER BILD ERGÄNZEN*. 
+Diese Daten werden dann in den Binary Classifier eingespeist, der dann Abläufe des Actors bewertet und mit in die Learner-Architektur liefert. Die Actor-Learner-Architektur ist gut aus @fig-arctor-learner-classifier zu entnehmen.
+
+#figure(
+  image("1-s2.0-S0007850625000642-gr1_lrg.jpg", width: 80%),
+  caption: [
+    Arctor-Learner Architektur und Binary/Reward Classifier - @liu_vision_2025
+  ],
+) <fig-arctor-learner-classifier>
+
 Zusätzlich dazu wird *"Image Cropping"* verwendet, wodurch Bilder auf 128×128 in relevante Bereiche verkleinert werden. 
 Jedoch geht keine direkte Nutzung von *Random Shift Augmentations*,  *Random Ensemble Distillation* oder anderer genannter Methoden aus dem Paper von Ball et. al. hervor, die als essenzielle Designentscheidung postuliert wurden, 
 um RLPD umzusetzen und Overfitting vorzubeugen. Besonders die *Random Shift Augmentation* wäre eine robuste Verbesserung und würde die Statik, die in den Bildern von Liu & Wang gegeben ist, vorbeugen.
-
-#pagebreak()
 
 = Diskussion und Evaluation
 
@@ -305,8 +309,6 @@ Während dieses Vorgehen die Dateneffizienz des Lernprozesses zweifellos steiger
 Ein System, das auf hochpräzise menschliche Abläufe angewiesen ist, widerspricht teilweise dem Ziel der autonomen Robotik, die auch mit imperfekten Daten umgehen sollte. 
 Verstärkt wird dieser Argument durch den "Human-in-the-Loop" (HIL) Ansatz, der ebenfalls während der Traningsphase, hohe menschliche Aufmerksamkeit und Expertenwissen fordert, wobei hier die Häufigkeit der Eingriffe deutlichen Aufschluss liefern würde. 
 
-#pagebreak()
-
 == Fazit
 
 Die vorliegende Arbeit untersuchte die Anwendung von hybriden Lernstrategien im Kontext der Präzisionsmontage. 
@@ -321,7 +323,7 @@ Ohne einen Impedanz-Controller sind die Vergleiche nicht tragfähig, da ein deut
 // LITERATURVERZEICHNIS
 // ==========================================
 #pagebreak()
-#bibliography("quellen.bib") // Du brauchst eine Datei namens literatur.bib
+#bibliography("quellen2.bib") // Du brauchst eine Datei namens literatur.bib
 
 
 // Wie bereits ausführlich erklärt, ist es nicht möglich einem Roboter, der derart feinmotorische und milimetergenaue Montageaufgaben bewältigen soll, statisch zu programmieren. Deshalb wurde im Paper Reinforcement Learning als Lösung genommen, in der ein Algorithmus selbständig lernt eine Strategie (Policy) zu entwickeln, die ihm vorgibt in einer Situation (Zustand) eine nahezu ideale Aktion vorzunehmen. Jedoch sind selbst klassische RL-Ansätze, wie auch der hier zugrundeliegende *SAC-Ansatz (Soft Actor Critc)* meist nicht ausreichend, um praxistauglich eingesetzt werden zu können. Grund dafür ist das das Erlernen einer Strategie oft Wochen von Laufzeit erfordert. Dateneffizienz ist bereits seit langer Zeit ein Problem beim Reinforcement Learning. Die Autoren bedienen sich dafür einer Erweiterung des SAC-Ansatzes, der sich rund um die Nutzung von Demonstrationen dreht. Der Algorithmus *RLPD (Reinforcement Learning with Prior Data)*, der in diesem Paper verwendet wurde, addressiert das Problem der Dateneffizienz, indem es bereits mit Vorkenntnissen der angepeilten Lösung arbeitet. Der größte Vorteil dabei ist, dass der RL-Algorithmus nicht von selbst die Richtung der Strategie erlernen muss, sondern bereits durch die Demos, in die Richtung der gewollten Strategie gedrückt wird. Die Struktur des Actor-Critic-Ansatzes wurde bereits ausführlich im MDP-Abschnitt behandelt. Im folgenden wollen wir uns mit den hier genutzten Besonderheiten des RLPD mit menschlichen Eingriffen beschäftigen. Zuerst wird  Dafür wird zuerst der allgemeine RLPD Ansatz aus einem Paper [Quelle] betrachtet, auf den sich auch die Autoren stützen. Aufbauend darauf wird die Umsetzung betrachtet, darunter fällt die Bereitstellung der Demos und wie diese in den RLPD eingebunden werden und anschließend auf die "Human-in-the-Loop" Umsetzung eingenagen.

@@ -120,13 +120,13 @@ Es existieren nämlich starke Unterschiede in der Bestimmung einer optimalen Pol
 Die Autoren modellieren ihr Montageproblem als ein Markov-Decision-Process (MDP) mit $M = {S, A, P, p, R, gamma}$. Während im Prinzip die Elemente des MDPs konzeptionell gleich bleiben, unterscheiden sie sich in der Umsetzung.
 
 - *$S$ (State Space)*: Die Zustandsmenge wird in dem Paper definiert als *State Observation Space*, also der gesamte beobachtbare Bereich der Montage über die Kameras und den Zustand des Armes. 
-  Die Kameras nehmen Bilder auf, die über ein ResNet-10 (ein Convolutional Neuronal Network @gong_resnet10_2022) in Vektoren übersetzt werden. Dadruch wird die Dateneffizienz gesteigert, da 
-  ResNet-10 die strukturellen Merkmale absthrahiert und deutlich komprimierter, ohne relevanten Informationsverlust aufbereitet.
+  Die Kameras nehmen Bilder auf, die über ein ResNet-10 (ein Convolutional Neuronal Network @gong_resnet10_2022) in Vektoren übersetzt werden. Dadurch wird die Dateneffizienz gesteigert, da 
+  ResNet-10 die strukturellen Merkmale abstrahiert und deutlich komprimierter, ohne relevanten Informationsverlust aufbereitet.
 - *$A$ (Action Space)*: Die Handlungsmöglichkeiten werden über die kartesische Koordinatenposition des Roboterarms und den Griffzustand definiert.
 - *$P$ und $p$ (Wahrscheinlichkeiten)*: Da der Roboterarm kaum immer von der gleichen Stelle aus mit der Montage beginnt und das Mainboard nicht immer im exakten Millimeterbereich gleich liegt, muss eine Wahrscheinlichkeitsverteilung $P(s)$ definiert werden, die unterschiedliche Start-Zustände modelliert. Zudem stellt $p$ nicht mehr einfache Wahrscheinlichkeiten an einer Transition dar, sondern repräsentiert die gesamte Dynamik des Systems. 
-  Unabhängig davon, wie präzise der Roboterarm ist, wird er sich mit einer gewissen physikalischen Schwankung von der angegebenen Trajektorie abweichen. Aufgrund der physikalischen Komplexität ist $p$ uns nicht bekannt, sondern wird durch Reinforcement Learning approximiert.
-- *$R$ (Reward Function)*: Die Autoren haben für $R$ ein binäres Klassifizierungssystem gewählt, das anhand zuvor tranierten Demos beurteilt, ob eine Montage erfolgreich war, oder fehlgeschlagen ist. Diese wird als Reward/Binary-Classifier bezeichnet.
-- *$gamma$ (Discount Factor)*: Erfüllt den exakt selben Zweck wie in im vorher aufgeführten Beispiel [@fig-mpd-graph].
+  Unabhängig davon, wie präzise der Roboterarm ist, wird er mit einer gewissen physikalischen Schwankung von der angegebenen Trajektorie abweichen. Aufgrund der physikalischen Komplexität ist $p$ uns nicht bekannt, sondern wird durch Reinforcement Learning approximiert.
+- *$R$ (Reward Function)*: Die Autoren haben für $R$ ein binäres Klassifizierungssystem gewählt, das anhand zuvor tranierter Demos beurteilt, ob eine Montage erfolgreich war, oder fehlgeschlagen ist. Diese wird als Reward/Binary-Classifier bezeichnet.
+- *$gamma$ (Discount Factor)*: Erfüllt den exakt selben Zweck wie im vorher aufgeführten Beispiel [@fig-mpd-graph].
 
 Bei näherer Betrachtung der Komponenten $S$ und $p$ zeigen sich die zentralen Herausforderungen dieses Ansatzes: die *stochastische Systemdynamik* (Nicht-Determinismus) und die *enorme Dimensionalität* des Zustandsraums. 
 // Letztere wird besonders bei den Sensordaten deutlich: Die beiden Handgelenkskameras (RealSense D405) liefern einen kontinuierlichen Strom an RGB-Bilddaten. 
@@ -147,7 +147,7 @@ Ein neuronales Netz besteht dabei aus unterschiedlichen Schichten: Einem Input L
 #figure(
   image("neural_network.jpg", width: 50%),
   caption: [
-    Neuronales Netzt mit drei Layer Ebene - @yau_estimation_2024
+    Neuronales Netz mit drei Ebenen - @yau_estimation_2024
   ],
 )
 
@@ -182,7 +182,7 @@ Es ist mathematisch nicht möglich, Rückpropagierung (Backpropagation) in einem
 Denn aus einem Sample $a$ können keine Rückschlüsse auf die Zufallsverteilung gezogen und keine plausiblen Anpassungen am neuronalen Netz vorgenommen werden. 
 Die Autoren bedienen sich hier des Tricks der *Reparametrisierung (Reparameterization)*, indem der Zufall grob gesagt in ein Standard-Rauschen $epsilon.alt$ ausgelagert wird, wodurch der stochastische Sample differenzierbar wird. @kingma_auto-encoding_2022. 
 Mithilfe dieses Tricks kann der Actor $Q_phi$ lernen, sich dem Critic $Q_pi$ anzupassen. Der zweite Teil der Funktion $tau Phi(pi_theta ( . | s))$ ist für die Exploration zuständig. 
-Damit wird vorgebeut, dass sich der Actor nicht zu früh in einer approximierten Lösung festsetzt, sondern nach anderen, eventuell besseren sucht. 
+Damit wird vorgebeugt, dass sich der Actor nicht zu früh in einer approximierten Lösung festsetzt, sondern nach anderen, eventuell besseren sucht. 
 Der Hyperparameter $tau$ (Temperatur) steuert dabei das Gleichgewicht: Ein hohes $tau$ fördert die Exploration, während ein niedriges $tau$ die Policy stärker auf die Nutzung des besten bekannten Weges (Exploitation) fokussiert. 
 Die Entropie $Phi$ gibt die Standardabweichung $sigma$ vor, also wie "experimentierfreudig" der Actor ist. 
 Diese Exploration wenden wir auf unseren Zustand $s$ unter der Berücksichtigung aller möglichen Handlungen $a$ (hier gekennzeichnet durch $(.|s)$, innerhalb der Policy $(pi_theta)$) an.
@@ -194,9 +194,9 @@ Der Actor leitet den Roboter unter der Berücksichtigung des Critics und eigenen
 Deep Reinforcement Learning (RL) konnte in vielen Feldern bereits Erfolge verzeichnen wie in Atari oder Go @tsividis_human_nodate @silver_mastering_2016.
 In diesen Beispielen werden hohe Erfolge durch Reinforcement Learning und viele Online Interaktionen erzielt, dass durch Simulationen gut umsetzbar ist. 
 Leider sind Probleme, wie das Montageproblem von Liu & Wang, in der Realität oft deutlich komplexer, als in einer Simulation @liu_vision_2025. Rewards sind meist absthrahiert, während sie in der Realität schwer greifbar und hochdimensional sind. 
-Die Autoren des Papers Ball et. al. postulieren den Ansatz von *RLPD* @ball_efficient_nodate. Dieser Unterscheidet sich von Deep RL und SAC + Offline Daten. 
-Liu & Wang stützen sich stark mit ihrer Architektur auf den Ansatz aus dem Paper von Ball et. al., wobei in RLPD drei erweiterte Designentscheidungen den Ansatz prägen. 
-Im folgenden werden wir die Motivation hinter diesen Erweiterungen anschauen und deren Umsetzung von Liu & Wang.
+Die Autoren des Papers Ball et al. postulieren den Ansatz von *RLPD* @ball_efficient_nodate. Dieser Unterscheidet sich von Deep RL und SAC + Offline Daten. 
+Liu & Wang stützen sich stark mit ihrer Architektur auf den Ansatz aus dem Paper von Ball et al., wobei in RLPD drei erweiterte Designentscheidungen den Ansatz prägen. 
+Im Folgenden werden wir die Motivation hinter diesen Erweiterungen anschauen und deren Umsetzung von Liu & Wang.
 
 == Hybrides Buffer-System und Replay Ratio
 
@@ -218,8 +218,8 @@ Dieses Vorgehen des symmetrischen Samplen wird auch von Liu & Wang verwendet, wi
   ],
 ) <fig-Actor-critc-architecture>
 
-Näher wird auch erklärt, dass es sich um menschliche Demonstrationen handelt, die im vorraus erstellt wurden. Für jede Montageaufgabe (CPU-Kühlkörper, RAM, Lüfter) wurden jeweils 30 erfolgreiche Trajektorien, also vollständige Bewegungsabläufe einer Montage, verwendet. 
-"Erfolgreich" wird hierbei druch zwei Kritierien definiert. Zum einen darf sich das zu montierende Objekt nicht mehr als $0.1"mm"$ von der Zielposition entfernt befinden.
+Näher wird auch erklärt, dass es sich um menschliche Demonstrationen handelt, die im Voraus erstellt wurden. Für jede Montageaufgabe (CPU-Kühlkörper, RAM, Lüfter) wurden jeweils 30 erfolgreiche Trajektorien, also vollständige Bewegungsabläufe einer Montage, verwendet. 
+"Erfolgreich" wird hierbei durch zwei Kritierien definiert. Zum einen darf sich das zu montierende Objekt nicht mehr als $0.1"mm"$ von der Zielposition entfernt befinden.
  Andererseits muss, sofern Ersteres erfüllt ist, der zuvor tranierte *Binary Classifier*, die Montage ebenfalls mit einer Wahrscheinlichkeit von min. 97% als "1", also erfolgreich bewerten. 
  Hier wurde entschieden, hochqualitative menschliche Abläufe als Offline-Daten zu verwenden.
  Ebenfalls werden beide Buffer gleich gewichtet, indem ein Batch gleiche Menge an Daten aus beiden Buffern enthält. 
@@ -254,7 +254,7 @@ Dabei besteht jedoch die Gefahr, dass der RL-Algorithmus in *Überanpassung (Ove
 Zum besseren Verständnis wird oft der Unterschied zwischen "Verstehen" und "Auswendig lernen" anhand eines veranschaulichten Beispiels aufgezeigt. 
 Wenn ein RL-Algorithmus zu exakt gelernt hat, eine Aufgabe zu lösen, sorgt der Zustand der Überanpassung dafür, dass die spezifisch gelernte Aufgabe mit einer hoher Genaugikeit gelöst wird, bei leichten Änderungen jedoch bereits scheitert. 
 Als Lösung dafür nennen Ball et. at. einige Möglichkeiten, wobei sie sich für die Methoden mit *Random Ensemble Distillation* und *Random Shift Augmentations* entscheiden. 
-Ersteres beschreibt die Verwendung mehrerer Critics, die sich gegenseitig vor Divergenz schützen. Letzteres wird genutzt, da Ball et. al. ebenfalls Bilder zum Training verwendet. 
+Ersteres beschreibt die Verwendung mehrerer Critics, die sich gegenseitig vor Divergenz schützen. Letzteres wird genutzt, da Ball et al. ebenfalls Bilder zum Training verwendet. 
 Dabei werden die Bilder um wenige Pixel zufällig verschoben, wodurch eine Art _"Wackeln"_ imitiert wird. 
 Das ist besonders nützlich, da so der RL-Algorithmus so lernt den RAM-Sockel wirklich als solchen zu erkennen und sich nicht auf statische Pixelpositionen versteift (Overfitting).
 
@@ -272,7 +272,7 @@ Diese Daten werden dann in den Binary Classifier eingespeist, der die Abläufe d
 ) <fig-Actor-learner-classifier>
 
 Zusätzlich wird die Methode *"Image Cropping"* verwendet, um Bilder auf eine Größe von 128×128 Pixeln zu verkleinern und sie auf relevante Bereiche zu beschränken.
-Eine direkte Nutzung von *Random Shift Augmentations*,  *Random Ensemble Distillation* oder anderer im Paper von Ball et. al. genannter Methoden, die als essenzielle Designentscheidung postuliert wurden, geht jedoch nicht hervor.
+Eine direkte Nutzung von *Random Shift Augmentations*,  *Random Ensemble Distillation* oder anderer im Paper von Ball et al. genannter Methoden, die als essenzielle Designentscheidung postuliert wurden, geht jedoch nicht hervor.
 Besonders die *Random Shift Augmentation* wäre eine robuste Verbesserung und würde der Statik, die in den Bildern von Liu & Wang gegeben ist, vorbeugen.
 
 = Diskussion und Evaluation
@@ -280,7 +280,7 @@ Besonders die *Random Shift Augmentation* wäre eine robuste Verbesserung und w�
 Die im Paper präsentierten Ergebnisse und die Methodik zur Lösung eines Montageproblems, bei dem Feinmotorik, Schrauben und präzise Kraftverhältnisse erforderlich sind, wurden mit beeindruckenden Technologien und modernen Ansätzen der Informatik angegangen. 
 Die wissenschaftliche Grundlage der Problematik wurde zuerst formal mit einem MDP formuliert und anschließend mit dem RLPD-Ansatz approximiert. Dieser Ansatz ist technisch anspruchsvoll und berührt Transfergebiete wie Maschinenbau, Elektrotechnik, Physik und Informatik. 
 Der gewählte RLPD-Ansatz wurde aus Gründen der Dateneffizienz und Lerngeschwindigkeit ausgewählt. 
-Die Umsetzung des RLPD wurde in der Ausarbeitung anhand des genutzten Papers von Bell et. al. grundlegend erklärt und anschließend mit der Umsetzung von Liu & Wang verglichen. 
+Die Umsetzung des RLPD wurde in der Ausarbeitung anhand des genutzten Papers von Ball et al. grundlegend erklärt und anschließend mit der Umsetzung von Liu & Wang verglichen. 
 Dabei spielt die Reproduzierbarkeit von Arbeiten eine wichtige Rolle in der Wissenschaft. Es fällt auf, dass Liu und Wang auf eine detaillierte Spezifikation ihrer Critic-Architektur verzichten und diese Designentscheidung unerwähnt lassen. 
 Da der Standard-SAC-Algorithmus ohne diese Modifikation in einem hybriden Setting zu Instabilitäten neigt, bleibt unklar, durch welchen Mechanismus die Autoren die hohe Erfolgsquote des Modells sicherstellen. 
 Diese Intransparenz erschwert nicht nur die Reproduktion der Ergebnisse, sondern lässt auch offen, ob der Erfolg auf einer robusten Architektur oder der Verwendung von Human-in-the-Loop (HIL) beruht. 

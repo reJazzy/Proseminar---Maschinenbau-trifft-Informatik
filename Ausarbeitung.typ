@@ -41,34 +41,32 @@
 // ==========================================
 
 = Einleitung & Motivation
-Roboter in der Industrie, insbesondere der Fertigungstechnik, sind für Unternehmen essenziell geworden und reduzieren hohe Kosten durch Fachkräfte, erhöhen die Zeiteffizienz und sind in Zeiten der Industrie 4.0 weit etabliert.
-Dies lässt sich am Beispiel der Automobilindustrie veranschaulichen, in der Firmen wie KUKA, bereits weit verbreitet mit ihren Automatisierungslösung sind.
-Dort werden hochautomatisierte Produktionsketten als Lösung angeboten, die hauptsächlich auf _"Flexible Robotik"_ setzen, in denen Roboterarme Aufgaben wie Montage, Schweißen oder Lackierung übernehmen @noauthor_kr_nodate.
+Roboter sind für Unternehmen in der Industrie, insbesondere in der Fertigungstechnik, sind für Unternehmen essenziell geworden. 
+Sie reduzieren die Kosten für Fachkräfte, erhöhen die Zeiteffizienz und sind in Zeiten der Industrie 4.0 weit etabliert.
+Dies lässt sich am Beispiel der Automobilindustrie veranschaulichen, in der Firmen wie KUKA mit ihren Automatisierungslösungen bereits weit verbreitet sind.
+Dort werden hochautomatisierte Produktionsketten als Lösung angeboten, die hauptsächlich auf _"Flexible Robotik"_ setzen. In diesen übernehmen Roboterarme Aufgaben wie Montage, Schweißen oder Lackierung. @noauthor_kr_nodate.
 Laut einer Analyse der International Federation of Robotics (IFR) erreichte der weltweite operative Bestand an Industrierobotern zuletzt mit rund einer Million Einheiten einen neuen Höchststand (2023) @robotics_international_nodate.
 
-Trotz der guten Etablierung weisen diese Lösungen dennoch Nachteile in Feinmotorik und kontaktreicher dynamischer Aufgaben auf. Die oben genannten Lösungen basieren meist auf statischen Regelwerken und gehen von
-deterministischen Abläufen aus. Tauchen in der Produktionskette kleinere Fehler auf, müssen diese meist durch Eingriffe von Menschen behoben werden, da klassische Robotiksysteme keine "intelligente" Reaktion auf derartige Probleme geben.
-Eine Lösung zur statischen Programmierung und festen Regelwerken, könnte die Informatik liefern. Die vorliegende Arbeit untersucht das Paper von Sichao Liu und Lihui Wang und liefert eine Lösung, die Konzepte aus der Informatik wie
-Markov-Decision-Processes (MDP), Reinforcement Learning (RL) und neuronale Netze verwendet @liu_vision_2025. Alle genannten Konzepte sind in der Informatik moderne Technologien und erfordern tiefes Wissen aus der Informatik.
+Trotz der guten Etablierung weisen diese Lösungen dennoch Nachteile in der Feinmotorik und bei kontaktreichen dynamischen Aufgaben auf. Die oben genannten Lösungen basieren meist auf statischen Regelwerken und gehen von
+deterministischen Abläufen aus. Tauchen in der Produktionskette kleinere Fehler auf, müssen diese meist durch Eingriffe von Menschen behoben werden, da klassische Robotiksysteme nicht "intelligent" Reaktion auf derartige Probleme reagieren.
+Eine Lösung für die statische Programmierung und die festen Regelwerke, könnte die Informatik liefern. Die vorliegende Arbeit untersucht das Paper von Sichao Liu und Lihui Wang und liefert eine Lösung, die Konzepte aus der Informatik wie Markov-Decision-Processes (MDP), Reinforcement Learning (RL) und neuronale Netze verwendet @liu_vision_2025. Alle genannten Konzepte sind moderne Technologien in der Informatik und erfordern tiefes Wissen aus diesem Bereich.
 
-Das Paper postuliert eine mögliche Lösung eines Lernprozesses für Roboter, in der Präzisionsarbeit durch intelligente visuelle Verarbeitung von räumlicher Umgebung und "Human-in-the-Loop" Reinforcement Learning erzielt wird. Dabei werden
-neuronale Netze, lernende Algorithmen und intelligente Impedanzcontroller verwendet. Demonstriert wird die Methode anhand der Montage von Computer-Hardware-Komponenten (konkret: RAM-Module und Kühlsystem auf einem Mainboard).
-Die Montage solcher kontaktreicher Komponenten mit der Kombination von Schrauben, korrektes Einsetzen und Widerstandserkennung beim RAM, würde einen großen Implementierungsaufwand beim klassisch statischen Programmieren aufweisen.
-Zusätzlich dazu wäre die Fehlerquote trotzdem hoch, da Abweichungen in Millimeterbereich bereits in Schäden an Bauteilen resultieren könnte (ein RAM-Riegel, der 1mm daneben liegt, wird nicht passen).
-Trotz dieser Herausforderungen, erreichten die Autoren eine nahezu perfekte Erfolgsquote von über 98%.
+In dem Paper wird eine mögliche Lösung für den Lernprozess von Robotern postuliert, bei der durch intelligente visuelle Verarbeitung der räumlichen Umgebung und „Human-in-the-Loop“-Reinforcement Learning Präzisionsarbeit erzielt wird. Dabei kommen neuronale Netze, lernende Algorithmen und intelligente Impedanzcontroller zum Einsatz. Die Methode wird anhand der Montage von Computer-Hardware-Komponenten demonstriert, konkret an RAM-Modulen und einem Kühlsystem auf einem Mainboard.
+Die Montage solcher kontaktreicher Komponenten mit Schrauben, das korrekte Einsetzen und die Widerstandserkennung beim RAM würden einen großen Implementierungsaufwand beim klassisch statischen Programmieren aufweisen.
+Zusätzlich dazu wäre die Fehlerquote hoch, da bereits Abweichungen im Millimeterbereich zu Schäden an Bauteilen führen könnten (ein RAM-Riegel, der 1 mm daneben liegt, wird nicht passen).
+Trotz dieser Herausforderungen erreichten die Autoren eine nahezu perfekte Erfolgsquote von über 98 %.
 
-Im Folgenden wird tiefer auf die Informatik des Papers eingegangen. Zuerst wird das eigentliche Problem als ein Markov Decision Process (MDP) modelliert. Dies ist nötig, da Reinforcement Learning Algorithmen auf solche MDP operieren.
-Des weiteren wird dann noch die verteilte Architektur, das Actor-Learner-Modell kurz erklärt und übergeleitet zur Umsetzung des lernenden Algorithmus. Der im Paper vorgestellte RLPD (Reinforcement Learning with Prior Data) bietet eine
-dateneffiziente Lösung an, die von Liu & Wang aufgegriffen und zum Teilen umgesetzt wird. Dabei wird die Umsetzung im Paper genauer beleuchtet und analysiert unter Bezugnahme des Papers von Ball et. al. @ball_efficient_nodate. 
-Abgeschlossen wird die Ausarbeitung mit einer Diskussion und Evaluation der gesamten Umsetzung der Informatik-Ansätze und Kritikwürdigung.
+Im Folgenden wird tiefer auf die Informatik des Papers eingegangen. Zunächst wird das eigentliche Problem als Markov Decision Process (MDP) modelliert. Dies ist nötig, da Reinforcement-Learning-Algorithmen auf solche MDPs operieren.
+Anschließend wird die verteilte Architektur, das Actor-Learner-Modell, kurz erklärt und zur Umsetzung des lernenden Algorithmus übergeleitet. Der im Paper vorgestellte RLPD (Reinforcement Learning with Prior Data) bietet eine dateneffiziente Lösung, die von Liu und Wang aufgegriffen und teilweise umgesetzt wird. Dabei wird die Umsetzung im Paper genauer beleuchtet und unter Bezugnahme des Papers von Ball et al. analysiert. @ball_efficient_nodate. 
+Abgeschlossen wird die Ausarbeitung mit einer Diskussion und Evaluation der gesamten Umsetzung der informatikbezogenen Ansätze sowie einer Kritikwürdigung.
 
 = Systemarchitektur & Problemmodellierung
 
 == Markov Decision Process (MDP)
 
-Das Paper modelliert das Montageproblem als einen Markov-Decission-Process (MDP). Dabei handelt es sich um eine formale, mathematische Definition eines Entscheidungsproblems, welches hier zur Optimierung der Montage verwendet wird. 
-Ein MDP lässt sich als gerichteter Graph modellieren, wobei die Knoten als Zustände und die Kanten als Zustandsübergänge (Transitionen) interpretiert werden, die durch Handlungen ausgelöst werden. 
-Zum besseren Verständnis wird ein bekanntes Beispiel aus der Vorlesung von David Silver (DeepMind / UCL) betrachtet: Der beschriebene Graph [Abbildung 1] modelliert den Studienalltag @google_deepmind_rl_2015.
+In dem Paper wird das Montageproblem als Markov-Decision-Process (MDP) modelliert. Dabei handelt es sich um eine formale, mathematische Definition eines Entscheidungsproblems, das hier zur Optimierung der Montage verwendet wird. 
+Ein MDP lässt sich als gerichteter Graph modellieren, wobei die Knoten die Zustände und die Kanten die durch Handlungen ausgelösten Zustandsübergänge (Transitionen) darstellen. 
+Zum besseren Verständnis betrachten wir ein bekanntes Beispiel aus der Vorlesung von David Silver (DeepMind/UCL): Der beschriebene Graph modelliert den Studienalltag @google_deepmind_rl_2015.
 
 #figure(
   image("1_Pc0d35FGiksR31ySXoXv5A.png", width: 80%),
@@ -77,46 +75,43 @@ Zum besseren Verständnis wird ein bekanntes Beispiel aus der Vorlesung von Davi
   ],
 ) <fig-mpd-graph>
 
-Um seinen Kurs bestehen zu können, müssen Studenten alle drei "Class"-Zustände erfolgreich durchlaufen. Die Kreise repräsentieren hierbei die Zustände, wobei der Zustand "Class 1" hier als Start-Zustand dient. 
-In diesem Zustand kann der Agent (Student) nun eine Handlung wählen, entweder "Facebook" oder "Study". Wählt er "Study", folgt eine Transition, die mit einer Wahrscheinlichkeit behaftet ist (in dem Fall implizit 1.0/100%). 
-Der Reward (R) ist der Wert, den der Agent für das Ausführen einer Aktion erhält. In "Class 1" kostet jeder Zeitschritt beispielsweise $R = −2$ (negativer Reward / Bestrafung). 
-Sobald sich der Agent in "Class 3" befindet, kann er sich für "Pub" entscheiden. Von da aus landet er mit unterschiedlichen Wahrscheinlichkeiten in "Class" 1-3 [@fig-mpd-graph]. Der Zustand "Sleep" ist ein terminierender Zustand, der das Ende markiert.
+Um den Kurs zu bestehen, müssen Studierende alle drei „Class“-Zustände erfolgreich durchlaufen. Die Kreise repräsentieren hierbei die Zustände, wobei „Class 1” als Startzustand dient.
+In diesem Zustand kann der Agent (Student) eine Handlung wählen: „Facebook” oder „Study”. Wählt er „Study”, folgt eine Transition, die mit einer bestimmten Wahrscheinlichkeit behaftet ist (in diesem Fall implizit 1/100). 
+Der Reward (R) ist der Wert, den der Agent für das Ausführen einer Aktion erhält. In „Class 1” kostet beispielsweise jeder Zeitschritt $R = −2$ (negativer Reward/Bestrafung). 
+Sobald sich der Agent in „Class 3” befindet, kann er sich für „Pub” entscheiden. Von dort aus gelangt er mit unterschiedlichen Wahrscheinlichkeiten in die Klassen 1–3 [@fig-mpd-graph]. Der Zustand „Sleep” ist ein terminierender Zustand, der das Ende markiert.
 
-Das Ziel (die Optimierung) in einem MDP besteht darin, eine Strategie (Policy) zu finden, die die Summe der erwarteten Rewards maximiert.
+Das Ziel (die Optimierung) in einem MDP besteht darin, eine Strategie (Policy) zu finden, mit der sich die Summe der erwarteten Rewards maximieren lässt.
 
 Um dies auf das Paper zu übertragen, nutzen wir dessen formale Definition eines MDPs @liu_vision_2025: *$ M = {S, A, P, p, R, gamma} $*
 
-- *$S$ (State Space)*: Beschreibt die Menge aller Zustände. In unserem Beispiel ist $S$ alle dargestellten Knoten, wobei $s in S$ ein konkreten Knoten beschreibt
-- *$A$ (Action Space)*: Beschreibt die Menge aller verfügbarer Aktionen. Im Zustand "Class 1" wäre das "Facebook" oder "Study".
+- *$S$ (State Space)*: Beschreibt die Menge aller Zustände. In unserem Beispiel sind alle dargestellten Knoten $S$ und ein konkreter Knoten $s$ in $S$.
+- *$A$ (Action Space)*: Beschreibt die Menge aller verfügbaren Aktionen. Im Zustand "Class 1" wären das „Facebook” oder "Study".
 - *$P$ und $p$ (Wahrscheinlichkeiten)*: Das große $P$ beschreibt die *Startverteilung* (Initial State Distribution). Da es praktisch unendlich viele Startkonfigurationen geben kann, gibt $P$ an, wie wahrscheinlich es ist, in
-  einem bestimmten Zustand $s_0$ zu starten. Im Beispiel wäre "Class 1" unser Start-Zustand mit $P(C l a s s 1) = 1.0$. Das kleine $p$ beschreibt die *Systemdynamik*. 
-  Es gibt die Erfolgswahrscheinlichkeit einer gewählten Aktion an. Im Beispiel: Wenn man "Pub" in "Class 3" wählt, ist $p = 0.4$ für den Übergang zu "Class 2". Diese Defintion unterscheidet sich
-  mit der von David Silvers Vorlesung. Um auf weiteres Vorgehen aufzubauen, wird sich an die Definition des Papers gehalten @liu_vision_2025.
-- *$R$ (Reward Function)*: Bewertet die Qualität der Entscheidung. Im Beispiel erhält man $R=−2$ für "Study". Dieser Wert ist der entscheidene Parameter, an dem die Optimierung gemessen wird.
+  einem bestimmten Zustand $s_0$ zu starten. Im Beispiel wäre "Class 1" unser Startzustand mit $P(C l a s s 1) = 1.0$. Das kleine $p$ beschreibt die *Systemdynamik*. 
+  Es gibt die Erfolgswahrscheinlichkeit einer gewählten Aktion an. Im Beispiel: Wenn man "Pub" in "Class 3" wählt, ist $p = 0.4$ für den Übergang zu "Class 2". Diese Definition unterscheidet sich von der in David Silvers Vorlesung. 
+  Um auf das weitere Vorgehen aufzubauen, wird sich an die Definition des Papers verwendet @liu_vision_2025.
+- *$R$ (Reward Function)*: Bewertet die Qualität der Entscheidung. Im Beispiel erhält man $R=−2$ für "Study". Dieser Wert ist der entscheidende Parameter, an dem die Optimierung gemessen wird.
 - *$gamma$ (Discount Factor)*: Dies ist der Gewichtungsfaktor $(0 ≤ γ < 1)$, der bestimmt, wie wichtig zukünftige Belohnungen im Vergleich zu sofortigen sind. Ein $γ$ nahe 0 beschreibt eine "kurzsichtige" Strategie (nur der nächste Reward zählt),     
   während ein $γ$ nahe 1 die Strategie "weitsichtig" macht (langfristige Ziele wie "Pass" werden wichtiger als kurzes Facebook-Vergnügen). 
-  In der Vorlesung von David Silver wurden beide Beispiele einmal gezeigt, wobei das ($gamma = 0$)-Beispiel in einer Facebook-Schleife verfiel und ($gamma = 1$) in "Pass" überging.
+  In der Vorlesung von David Silver wurden beide Beispiele einmal gezeigt: Das ($gamma = 0$)-Beispiel verfiel in eine Facebook-Schleife, während das ($gamma = 1$)-Beispiel in "Pass" überging.
 
-Hat man nun ein MDP formuliert, gilt es dieses zu lösen, wobei die Lösung bei einem Optimierungs-/Maximierungsproblem der höchstmögliche erreichbare Wert beschreibt, in unserem Fall der Reward $R$. Die gängiste Vorgehensweise bei dem lösen von MDPs ist
-das Aufstellen einer Strategie, einer sogenannten *Policy $(pi)$*. Nach einem bekannten Theorem gilt, dass es für jeden MDP eine optimale Policy $(pi)$ gibt, die besser oder gleich aller anderen Policies ist, also $pi_* >= pi, forall pi$ @google_deepmind_rl_2015. 
-Auf unser Bespiel bezogen, wird eine Policy $(pi_*)$ gesucht, die den höchstmöglichen Wert für $ E [ sum_(t=0)^h gamma^t R(s_t, a_t) ] $ findet.
-Da die Übergänge zwischen den Zuständen stochastisch und dementsprechend Unsicherheiten vorhanden sind, bilden wir den Erwartungswert aller möglichen Verläufe.
-Das $gamma$ dient hier wie bereits angedeutet als Diskontierungsfaktor, der je nach Wahl über Zeitschritte $t$ die Gewichtung immer kleiner bis nahe 0 einfließen lässt.
+Nachdem ein MDP formuliert wurde, muss es gelöst werden. Bei einem Optimierungs-/Maximierungsproblem beschreibt die Lösung den höchstmöglichen erreichbaren Wert, in unserem Fall den Reward $R$. Die gängigste Vorgehensweise beim Lösen von MDPs ist das Aufstellen einer Strategie, einer sogenannten *Policy $(pi)$*. Nach einem bekannten Theorem gilt, dass es für jeden MDP eine optimale Policy $(pi)$ gibt, die besser oder gleich allen anderen Policies ist, also $pi_* >= pi, forall pi$ @google_deepmind_rl_2015. 
+Auf unser Beispiel bezogen, wird eine Policy $(pi_*)$ gesucht, die den höchstmöglichen Wert für $ E [ sum_(t=0)^h gamma^t R(s_t, a_t) ] $ findet.
+Da die Übergänge zwischen den Zuständen stochastisch sind und es dementsprechend Unsicherheiten gibt, bilden wir den Erwartungswert aller möglichen Verläufe.
+Das $gamma$ dient hier wie bereits angedeutet als Diskontierungsfaktor, der je nach Wahl über die Zeitschritte $t$ die Gewichtung immer kleiner bis nahe 0 einfließen lässt.
 Die Rewardfunktion mit $R(s_t, a_t)$ definiert für den derzeitigen Zustand $s_t$ unter der Handlung $a_t$ den Reward $R$. Dieser wird dann bis zum angegebenen Horizont $h$ akkumuliert. 
 
-Für das Beispiel eines Studentenleben ist eine optimale Policy $(pi_*)$ einfach zu bestimmen. 
-Mithilfe der *optimale Action-Value Function* $Q_*(s, a)$ können wir bestimmen, welchen maximalen akkumulierten Reward man erwarten kann, wenn man im Zustand $s$ die Aktion $a$ wählt und danach optimal weitermacht.
+Für das Beispiel des Studentenlebens ist eine optimale Policy $(pi_*)$ einfach zu bestimmen. 
+Mithilfe der *optimalen Action-Value-Function* $Q_*(s, a)$ können wir den maximalen akkumulierten Reward bestimmen, den man erwarten kann, wenn man sich im Zustand $s$ für die Aktion $a$ entscheidet und anschließend optimal weitermacht.
 Ein Blick auf [@fig-mpd-graph] verdeutlicht dies am Zustand "Class 3":
 - Der Wert für Lernen ist $Q_*("Class 3", "Study") = 10$.
 - Der Wert für die Kneipe ist $Q_*("Class 3", "Pub") = 8.4$.
-Da $10 > 8.4$ ist, ist die Handlung "Study" hier die optimale Wahl. Die Policy $(pi_*)$ wählt also stets gierig ("greedy") das Maximum über $Q_*$. Ein bekanntes Vorgehen für das bestimmen von $Q_*$ in allen Zuständen ist der Beginn am Ende und zurückschauen
-in Vorgängerzuständen @google_deepmind_rl_2015. Nachdem vereinfacht ausgedrückten Bellmann'schen Optimalitätsprinzip gilt nämlich, dass jede Teilpolicy $pi_"sub"$ einer optimalen Policy $pi_*$, auch optimal ist @google_deepmind_rl_2015. 
-Zur Veranschaulichung: Wenn die kürzeste ICE Strecke von Berlin nach München, über Leipzig ist, dann ist die kürzeste Strecke von Leipzig nach München, die gleiche. 
-Aufgrund dieser Eigenschaft können wir das Problem beginnend vom Ende lösen, da die kürzeste Strecke von München nach München trivial und bekannt ist. 
+Da $10 > 8.4$ ist, ist die Handlung "Study" hier die optimale Wahl. Die Policy $(pi_*)$ wählt also stets gierig ("greedy") das Maximum über $Q_*$. Ein bekanntes Vorgehen, um $Q_*$ n allen Zuständen zu bestimmen, ist, mit dem Ende zu beginnen und in Vorgängerzuständen zurückzuschauen @google_deepmind_rl_2015. Dem vereinfacht ausgedrückten Bellmann'schen Optimalitätsprinzip zufolge ist nämlich jede Teilpolitik (Subpolicy) $pi_"sub"$ einer optimalen Politik (Policy) $pi_*$, ebenfalls optimal @google_deepmind_rl_2015. 
+Zur Veranschaulichung: Wenn die kürzeste ICE-Strecke von Berlin nach München über Leipzig führt, dann ist die kürzeste Strecke von Leipzig nach München dieselbe. 
+Aufgrund dieser Eigenschaft können wir das Problem vom Ende ausgehend lösen, da die kürzeste Strecke von München nach München trivial und bekannt ist. 
 Man beginnt in den terminierenden Zuständen (z.B. "Sleep" mit Wert 0) und berechnet die Werte der davorliegenden Zustände rekursiv rückwärts.
 Dabei gilt für jeden Schritt: Der Wert eines Zustands ist der sofortige Reward plus der (bereits berechnete) maximale Wert des Nachfolgezustands. 
-So propagieren sich die korrekten $Q_*$-Werte von hinten nach vorne durch den gesamten Graphen, bis für alle Zustände $s in S$ die optimale Entscheidung feststeht. Daraus leiten wir dann unsere optimale Policy $pi_*(a|s)$ ab, also mit welcher Wahrscheinlichkeit wir
-Handlung $a$ in Zustand $s$ wählen.
+So propagieren sich die korrekten $Q_*$-Werte von hinten nach vorne durch den gesamten Graphen, bis für alle Zustände $s in S$ die optimale Entscheidung feststeht. Daraus leiten wir dann unsere optimale Policy $pi_*(a|s)$ ab, also die Wahrscheinlichkeit, mit der wir Handlung $a$ in Zustand $s$ wählen.
 
 == MDP zur Modellierung eines Montageproblems
 
@@ -124,31 +119,30 @@ Da nun eine gewisse Grundlage für Verständnis von MDPs geschaffen wurde, wird 
 Es existieren nämlich starke Unterschiede in der Bestimmung einer optimalen Policy $(pi_*)$.
 Die Autoren modellieren ihr Montageproblem als ein Markov-Decision-Process (MDP) mit $M = {S, A, P, p, R, gamma}$. Während im Prinzip die Elemente des MDPs konzeptionell gleich bleiben, unterscheiden sie sich in der Umsetzung.
 
-- *$S$ (State Space)*: Die Zustandsmenge wird in dem Paper definiert als *State Observation Space*, also der gesamte beobachtbare Bereich der Montage über die Kameras und Zustand des Armes. 
+- *$S$ (State Space)*: Die Zustandsmenge wird in dem Paper definiert als *State Observation Space*, also der gesamte beobachtbare Bereich der Montage über die Kameras und den Zustand des Armes. 
   Die Kameras nehmen Bilder auf, die über ein ResNet-10 (ein Convolutional Neuronal Network @gong_resnet10_2022) in Vektoren übersetzt werden. Dadruch wird die Dateneffizienz gesteigert, da 
   ResNet-10 die strukturellen Merkmale absthrahiert und deutlich komprimierter, ohne relevanten Informationsverlust aufbereitet.
-- *$A$ (Action Space)*: Die Handlungsmöglichkeiten werden über die kartesische Koordinatenposition des Roboterarms und Griff-Zustand definiert.
-- *$P$ und $p$ (Wahrscheinlichkeiten)*: Der Roboterarm wird kaum immer von der gleichen Stelle aus Anfangen, zu montieren, noch wird das Mainboard immer im exakten Millimeterbereich gleich liegen. Deshalb muss eine
-  Wahrscheinlichkeitsverteilung $P(s)$ definiert werden, die unterschiedliche Start-Zustände modelliert. Zudem stellt $p$ nicht mehr einfache Wahrscheinlichkeiten an einer Transition dar, sondern die gesamte Dynamik des Systems wird durch $p$ repräsentiert. 
-  Der Roboterarm wird egal wie präsize er ist, sich mit einer gewissen physikalischen Schwankung von der angegebenen Trajektorie abweichen. Aufgrund der physikalischen Komplexität, ist $p$ uns nicht bekannt, sondern wird durch Reinforcement Learning approximiert.
-- *$R$ (Reward Function)*: Die Autoren haben für $R$ ein binäres Klassifizierungssystem gewählt, dass anhand von vorher tranierten Demos beurteilt, ob eine Montage erfolgreich, oder fehlgeschlagen ist.
-- *$gamma$ (Discount Factor)*: Erfüllt den exakt selben Zweck wie in vorher aufgeführten Beispiel [@fig-mpd-graph].
+- *$A$ (Action Space)*: Die Handlungsmöglichkeiten werden über die kartesische Koordinatenposition des Roboterarms und den Griffzustand definiert.
+- *$P$ und $p$ (Wahrscheinlichkeiten)*: Da der Roboterarm kaum immer von der gleichen Stelle aus mit der Montage beginnt und das Mainboard nicht immer im exakten Millimeterbereich gleich liegt, muss eine Wahrscheinlichkeitsverteilung $P(s)$ definiert werden, , die unterschiedliche Start-Zustände modelliert. Zudem stellt $p$ nicht mehr einfache Wahrscheinlichkeiten an einer Transition dar, sondern repräsentiert die gesamte Dynamik des Systems. 
+  Unabhängig davon, wie präzise der Roboterarm ist, wird er sich mit einer gewissen physikalischen Schwankung von der angegebenen Trajektorie abweichen. Aufgrund der physikalischen Komplexität ist $p$ uns nicht bekannt, sondern wird durch Reinforcement Learning approximiert.
+- *$R$ (Reward Function)*: Die Autoren haben für $R$ ein binäres Klassifizierungssystem gewählt, das anhand zuvor tranierten Demos beurteilt, ob eine Montage erfolgreich war, oder fehlgeschlagen ist.
+- *$gamma$ (Discount Factor)*: Erfüllt den exakt selben Zweck wie in im vorher aufgeführten Beispiel [@fig-mpd-graph].
 
 Bei näherer Betrachtung der Komponenten $S$ und $p$ zeigen sich die zentralen Herausforderungen dieses Ansatzes: die *stochastische Systemdynamik* (Nicht-Determinismus) und die *enorme Dimensionalität* des Zustandsraums. 
 // Letztere wird besonders bei den Sensordaten deutlich: Die beiden Handgelenkskameras (RealSense D405) liefern einen kontinuierlichen Strom an RGB-Bilddaten. 
 // Bei einer Frequenz von 30 Hz und einem Crop von 128×128 Pixeln müssen pro Sekunde knapp 1 Million Bildpunkte verarbeitet werden. Unter der Annahme einer Standard-Farbtiefe (8-Bit pro Kanal) entspricht dies einem Datenvolumen von ca. 3 MB/s.
-Anhand dieser Grundlage ist es nicht möglich, eine _"wahre"_ optimale Policy $(pi_*)$ zu finden, stadessen wird diese durch Reinforcement approximiert. 
-Um sich aber einer optimalen Policy überhaupt annähren zu können, muss eine *parametrisierte Funktionsapproximation* erfolgen. 
-Das Paper nutzt hierfür einen sogenannten *Soft-Actor-Critic-Ansatz (SAC)* mit signifikaten Designerweiterungen, der zum gewählten Reinforcement Learning with Prior Date (RLPD) führt. 
-Dabei wird das komplexe Optimierungsproblem auf zwei neuronale Netze aufgeteilt, die gegenseitig voneinander lernen. Im folgendes wird der Kern, das Zusammenspiel und die formale Definition vom Actor und Critc (SAC) veranschaulicht @haarnoja_soft_2018. 
+Anhand dieser Grundlage ist es nicht möglich, eine _"wahre"_ optimale Policy $(pi_*)$ zu finden. Stadessen wird diese durch Reinforcement approximiert. 
+Um sich einer optimalen Policy überhaupt annähern zu können, muss eine *parametrisierte Funktionsapproximation* erfolgen. 
+Das Paper nutzt hierfür einen sogenannten *Soft-Actor-Critic-Ansatz (SAC)* mit signifikanten Designerweiterungen, der zum gewählten Reinforcement Learning with Prior Data (RLPD) führt. 
+Dabei wird das komplexe Optimierungsproblem auf zwei neuronale Netze aufgeteilt, die gegenseitig voneinander lernen. Im Folgenden wird das Zusammenspiel von Actor und Critic (SAC) veranschaulicht @haarnoja_soft_2018. 
 
 == Actor-Critic-Modell
-Die analytische Lösung eines MDPs basiert @google_deepmind_rl_2015, auf der *Bellman-Gleichung*. Diese besagt, dass der Wert eines Zustands genau dem Erwartungswert aus dem Reward und dem Wert des Folgezustands entspricht:
-$Q_*(s, a) = E [ R(s, a) + gamma max_(a') Q^*(s', a') ]$. Im klassischen Fall wird diese Gleichung iterativ gelöst, bis die Werte konvergieren. Für das Montageproblem im Paper ist dies aufgrund der hochdimensionalen Bilddaten und Systemdynamik nicht möglich.
+Die analytische Lösung eines MDP basiert @google_deepmind_rl_2015 auf der *Bellman-Gleichung*. Diese besagt, dass der Wert eines Zustands genau dem Erwartungswert aus dem Reward und dem Wert des Folgezustands entspricht:
+$Q_*(s, a) = E [ R(s, a) + gamma max_(a') Q^*(s', a') ]$. Im klassischen Fall wird diese Gleichung iterativ gelöst, bis die Werte konvergieren. Für das in dem Paper beschriebene Montageproblem ist dies aufgrund der hochdimensionalen Bilddaten und Systemdynamik jedoch nicht möglich.
 Daher müssen wir die analytische Funktion $Q^*$ durch ein neuronales Netz $Q_phi$ approximieren. Ein künstliches neuronales Netz (KNN) ist ein Modell des maschinellen Lernens, das in seiner Funktionsweise grob dem menschlichen Gehirn nachempfunden ist.
 Es dient dazu, Muster in Daten zu erkennen und Entscheidungen zu treffen. 
-Der einfachhaltshalber nehmen wir folgendes an: Ein neuronales Netz $Q_phi$ lernt eine Funktion $f(X)$ durch Zuordnung eines Eingabevektors $X = (x_1, x_2, x_3, ...)$ um eine Reaktion $Y$ vorherzusagen. 
-Dabei besteht ein Neuronales Netz aus unterschiedlichen Schichten, einem Input Layer für $X$, mehrschichtigen versteckten Layer, das hauptsächlich für das Lernen von $f(X)$ zuständig ist und einem Output Layer, indem $Y$ ausgegeben wird @noauthor_was_2021.
+Der Einfachheit halber nehmen wir Folgendes an: Ein neuronales Netz $Q_phi$ lernt eine Funktion $f(X)$ indem es einen Eingabevektor $X = (x_1, x_2, x_3, ...)$ einer Reaktion $Y$ zuordnet. 
+Ein neuronales Netz besteht dabei aus unterschiedlichen Schichten: Einem Input Layer für $X$, mehrschichtigen versteckten Layern, die hauptsächlich für das Lernen von $f(X)$ zuständig sind, und einem Output Layer, in dem $Y$ ausgegeben wird @noauthor_was_2021.
 
 #figure(
   image("neural_network.jpg", width: 50%),
@@ -157,44 +151,43 @@ Dabei besteht ein Neuronales Netz aus unterschiedlichen Schichten, einem Input L
   ],
 )
 
-Die Autoren des Papers nutzen zwei Neuronale Netzwerke, eines für den Actor und eines für den Critic. Im folgenden wird tiefer auf die einzelnen Netzwerke eingegangen und ihre Wechselwirkung aufeinander analysiert.
+Die Autoren des Papers nutzen zwei neuronale Netzwerke: Eines für den Actor und eines für den Critic. Im Folgenden werden die einzelnen Netzwerke näher erläutert und ihre Wechselwirkung analysiert.
 
 === Critic
 
-Der Critic bewertet eine derzeitige Einschätzung des Netzwerks und vergleicht diese mit der tatsächlichen Situation und Zukunft. Dafür wurde folgende Loss-Funktion $cal(L_Q)$ aufgestellt:
+Der Critic bewertet die Aktuelle Einschätzung des Actors und vergleicht sie mit der tatsächlichen Situation und Zukunft. Dazu wurde folgende Loss-Funktion $cal(L_Q)$ aufgestellt:
 
 $ cal(L)_Q (phi) = E_(s,a,s') [ ( Q_phi (s, a) - (R (s, a) + gamma E_(a' ~ pi_theta) [Q_(overline(phi)) (s', a')]) )^2 ] $ <eq:critic>
 
-Die Funktion $cal(L)_Q$ bestimmt die Fehlerquote der Parameter $phi$ im neuronalen Netzwerk $Q_phi$, indem es anhand einer Stichprobe (einem Batch aus dem Replay Buffer) den *mittleren quadratischen Fehler* (Mean Squared Error) zwischen zwei Werten berechnet.
-Dafür nimmt es einmal den Wert der eigenen Vorhersage $Q_phi (s, a)$, also eine Einschätzung des Netzwerks über die Handlung $a$ in Zustand $s$ und zum anderen dem *Bellman-Zielwert* (Target), 
-der sich zusammen aus dem tatsächlich erhaltenen Reward $R(s, a)$ und der diskontierten Prognose, also $gamma times Q_(overline(phi)) (s', a')$, des *Target-Networks* $Q_(overline(phi))$ für den Folgezustand ergibt. 
-Wichtig zu beachten ist, dass es sich beim Target-Network um ein anderes Network handelt als $Q_phi$. Das liegt daran, dass eine sofortige Aktualisierung der Werte zum gleichzeitigen
-Veränderung des Netzwerkes und Zieles führen würde. Deshalb wird eine Kopie $Q_overline(phi)$ erstellt, wodurch das Training stabilisiert wird. 
-Dadurch wird verhindert, dass das Ziel ("Moving Target") während des Updates zu stark schwankt, indem die Parameter $overline(phi)$ nicht direkt optimiert werden, 
-sondern den Hauptparametern $phi$ folgen und über einen gleitenden Durchschnitt (Soft Update) aktualisert werden @haarnoja_soft_2018.
+Die Funktion $cal(L)_Q$ bestimmt die Fehlerquote der Parameter $phi$ im neuronalen Netzwerk $Q_phi$. Dazu wird anhand einer Stichprobe (einem Batch aus dem Replay Buffer) über den *mittleren quadratischen Fehler* (Mean Squared Error) zwischen zwei Werten berechnet.
+Dafür wird einmal der Wert der eigenen Vorhersage $Q_phi (s, a)$, also die Einschätzung des Netzwerks über die Handlung $a$ in Zustand $s$ und zum anderen dem *Bellman-Zielwert* (Target) berechnet.
+Der Zielwert setzt sich aus dem tatsächlich erhaltenen Reward $R(s, a)$ und der diskontierten Prognose, also $gamma times Q_(overline(phi)) (s', a')$, des *Target-Networks* $Q_(overline(phi))$ für den Folgezustand zusammen. 
+Wichtig zu beachten ist, dass es sich beim Target-Network um ein anderes Netzwerk als $Q_phi$ handelt. Das liegt daran, dass eine sofortige Aktualisierung der Werte zu einer gleichzeitigen Veränderung des Netzwerks und des Ziels führen würde. Deshalb wird eine Kopie $Q_overline(phi)$ erstellt, wodurch das Training stabilisiert wird. 
+Dadurch wird verhindert, dass das Ziel ("Moving Target") zu stark schwankt, indem die Parameter $overline(phi)$ nicht direkt optimiert werden, 
+sondern den Hauptparametern $phi$ folgen und über einen gleitenden Durchschnitt (Soft Update) aktualisiert werden @haarnoja_soft_2018.
 
-Der Critic dient als Leiter für den Actor, der die tatsächlichen Bewegungen ausführt bzw. die Policy $(phi_theta)$ aktualisert, auf dem die Bewegungen basieren.
+Der Critic dient als Leiter für den Actor, der die tatsächlichen Bewegungen ausführt bzw. die Policy $(phi_theta)$ aktualisiert, auf der die Bewegungen basieren.
 
 === Actor
 
-Der Actor steuert den Roboter, da er die tatsächliche Policy $(phi_theta)$ definiert, die das Montageproblem löst. Dafür wurde folgende Loss-Funktion $cal(L_pi)$ aufgestellt:
+Der Actor steuert den Roboter, da er die tatsächliche Policy $(phi_theta)$ definiert, die das Montageproblem löst. Dazu wurde folgende Loss-Funktion $cal(L_pi)$ aufgestellt:
 
 $ cal(L)_pi (theta) = -E_s [ E_(a ~ pi_theta (theta)) [Q_phi (s, a)] + tau Phi(pi_theta ( . | s)) ] $ <eq:actor>
 
-Die Funktion $cal(L)_pi$ setzt sich aus zwei Zielen zusammen: Einmal Gierig (Exploitation) zu sein und andereseits Neugierig (Exploration). 
-Das $(-)$ zu beginn der Funktion wandelt das Maximierungsproblem in ein Minimierungsproblem um, da Computer besser darin sind, Fehler zu minimieren.
-Denn die Maximierung vom Reward, also dem Suchen eines globalen Optimus einer Funktion $f(x)$ ist für uns gleichbedeutend wie das Duchen des globalen Minimums $-f(x)$, nur einfacher für Computer umzusetzen.
-Der Teil, der die Gier des Actors steuert, ist in diesem Teil enthalten: $E_(a ~ pi_theta (theta)) [Q_phi (s, a)]$. Das $a ~ pi_theta (theta)$ hat dabei eine relativ wichtige Bedeutung. 
-Es ist mathematisch nicht möglich, Rückpropagierung (Backpropagation) in einem neuronalen Netz zu betreiben, wenn Stochastik zugrundeliegt. 
-Denn aus einem Sample $a$ können keine Rückschlüsse zur Zufallsverteilung gezogen und plausible Anpassungen am Neuronalen Netz vorgenommen werden. 
-Die Autoren bedienen sich hier dem Trick der *Reparametrisierung (Reparameterization)*, indem grob gesagt der Zufall in ein Standard-Rauschen $epsilon.alt$ ausgelagert wird, wodurch der stochatischen Sample, differenzierbar wird @kingma_auto-encoding_2022. 
-Durch diesen Trick kann über dem Critic $Q_phi$, der Actor $Q_pi$ lernen, sich anzupassen. Der zweite Teil der Funktion $tau Phi(pi_theta ( . | s))$ ist zuständig für die Exploration. 
+Die Funktion $cal(L)_pi$ setzt sich aus zwei Zielen zusammen: Einerseits Gierig (Exploitation) zu sein und andererseits Neugierig (Exploration). 
+Die Subtraktion zu Beginn der Funktion wandelt das Maximierungsproblem in ein Minimierungsproblem um, da Computer besser darin sind, Fehler zu minimieren.
+Die Maximierung des Rewards, also die Suche nach dem globalen Optimum einer Funktion $f(x)$ ist für uns gleichbedeutend mit der Suche nach dem globalen Minimum $-f(x)$, jedoch einfacher für Computer umzusetzen.
+Der Teil, der die Gier des Actors steuert, ist in diesem Teil enthalten: $E_(a ~ pi_theta (theta)) [Q_phi (s, a)]$. Dabei hat das $a ~ pi_theta (theta)$ eine relativ wichtige Bedeutung. 
+Es ist mathematisch nicht möglich, Rückpropagierung (Backpropagation) in einem neuronalen Netz zu durchzuführen, wenn Stochastik zugrunde liegt. 
+Denn aus einem Sample $a$ können keine Rückschlüsse auf die Zufallsverteilung gezogen und keine plausiblen Anpassungen am neuronalen Netz vorgenommen werden. 
+Die Autoren bedienen sich hier des Tricks der *Reparametrisierung (Reparameterization)*, indem der Zufall grob gesagt in ein Standard-Rauschen $epsilon.alt$ ausgelagert wird, wodurch der stochastische Sample differenzierbar wird. @kingma_auto-encoding_2022. 
+Mithilfe dieses Tricks kann der Actor $Q_phi$ lernen, sich dem Critic $Q_pi$ anzupassen. Der zweite Teil der Funktion $tau Phi(pi_theta ( . | s))$ ist für die Exploration zuständig. 
 Damit wird vorgebeut, dass sich der Actor nicht zu früh in einer approximierten Lösung festsetzt, sondern nach anderen, eventuell besseren sucht. 
-Der Hyperparameter $tau$ (Temperatur) steuert dabei die Balance: Ein hohes $tau$ fördert Exploration, während ein niedriges $tau$ die Policy stärker auf die Nutzung des besten bekannten Weges (Exploitation) fokussiert. 
-Die Entropie $Phi$ gibt die Standardabweichung $sigma$ vor, also wie "Experimentierfreudig" der Actor ist. 
-Diese Exploration wenden wir auf unseren Zustand $s$ an unter der Berücksichtigung aller möglichen Handlungen $a$ (hier gekennzeichnet durch $(.|s)$, innerhalb der Policy $(pi_theta)$).
+Der Hyperparameter $tau$ (Temperatur) steuert dabei das Gleichgewicht: Ein hohes $tau$ fördert die Exploration, während ein niedriges $tau$ die Policy stärker auf die Nutzung des besten bekannten Weges (Exploitation) fokussiert. 
+Die Entropie $Phi$ gibt die Standardabweichung $sigma$ vor, also wie "experimentierfreudig" der Actor ist. 
+Diese Exploration wenden wir auf unseren Zustand $s$ unter der Berücksichtigung aller möglichen Handlungen $a$ (hier gekennzeichnet durch $(.|s)$, innerhalb der Policy $(pi_theta)$) an.
 
-Der Actor leitet den Roboter unter der Berücksichtigung des Critics und eigenem _"Neugierfaktor"_.  
+Der Actor leitet den Roboter unter der Berücksichtigung des Critics und seines _"Neugierfaktors"_.  
 
 = Effizientes Online Reinforcement Learning mit offline Daten - RLPD
 
@@ -207,16 +200,16 @@ Im folgenden werden wir die Motivation hinter diesen Erweiterungen anschauen und
 
 == Hybrides Buffer-System und Replay Ratio
 
-Beim klassischen Deep Reinforcement Learning kommt die Dauer des Lernprozesses vor allem aus der Anfangsphase, in denen der Algorithmus erst eine gewisse Richtung ermitteln muss, in der sich die optimale Policy befindet. 
-Die Richtungfindung, kann aber minimiert werden, indem beim Deep RL im vorraus bereits suboptimale Policies oder menschliche Demonstrationen die Richtung vorgeben. Mit einher gehen jedoch Probleme mit diesen Demonstrationen. 
-Während der RL-Algorithmus lernt, werden in kurzer Zeit bereits eine Vielzahl von Druchläufen in den Replay-Buffer, den Speicher, in dem alle Epochen gespeichert werden, geladen und überwiegen schnell die Anzahl an selbstgelandener Daten. 
-Die Autoren Ball et. al. erkannten das ebenfalls und entwarfen basierend auf Ross & Bagnell (2012) eine symmetrische Replay-Buffer Architeuktur @ross_agnostic_2012. 
-Dabei werden statt nur einem Replay-Buffer, zwei Buffer angelegt, wobei einer die Online Daten des RL-Algorithmus speichert und aufnimmt und einem Offline Buffer, der als Beispiel die eben genannten menschlichen Demonstrationen, speichert. 
-Das hat vor allem den Vorteil, dass unter der schnell groß werdenen Menge an RL-Abläufen, die vorgefertigten Richtungsgeber nicht untergehen. 
-Damit aber auch beim Samplen die Gewichtung erhalten bleibt, wird aus beiden Buffern die gleiche Menge an Daten entnommen, genau genommen jeweils 50%. 
-Diese Designentscheidung erweist sich als besonders effektiv, wie in der Evaluation zu erkennen ist, auch wenn alleine nicht ausreichend @ball_efficient_nodate.
+Beim klassischen Deep Reinforcement Learning dauert es in der Anfangsphase besonders lange, bis der Algorithmus eine Richtung ermittelt hat, in der sich die optimale Policy befindet. 
+Dieser Prozess der Richtungfindung kann jedoch minimiert werden, indem beim Deep RL im Voraus bereits suboptimale Policies oder menschliche Demonstrationen die Richtung vorgeben. Mit diesen Demonstrationen gehen jedoch Probleme einher. 
+Während der RL-Algorithmus lernt, werden in kurzer Zeit bereits eine Vielzahl von Durchläufen in den Replay-Buffer geladen. Das ist der Speicher, in dem alle Epochen gespeichert werden, und die geladenen Daten überwiegen schnell die selbst generierten. 
+Ball et al. erkannten dies ebenfalls und entwarfen basierend auf Ross & Bagnell (2012) eine symmetrische Replay-Buffer-Architektur @ross_agnostic_2012. 
+Dabei werden statt nur einem Replay-Buffer zwei Buffer angelegt: Einer speichert und nimmt die Online-Daten des RL-Algorithmus auf, der andere dient als Offline-Buffer und speichert beispielsweise die eben genannten menschlichen Demonstrationen. 
+Das hat vor allem den Vorteil, dass die vorgefertigten Richtungsgeber nicht unter der schnell wachsenden Menge an RL-Abläufen untergehen. 
+Damit beim Samplen aber auch die Gewichtung erhalten bleibt, wird aus beiden Buffern jeweils die Hälfte der Daten entnommen. 
+Diese Designentscheidung erweist sich in der Evaluation als besonders effektiv, auch wenn sie alleine nicht ausreicht @ball_efficient_nodate.
 
-Dieses Vorgehen des symmetrischen Samples wird auch von Liu & Wang verwendet, wie zu erkennen in [@fig-arctor-critc-architecture] ist.
+Dieses Vorgehen des symmetrischen Samplen wird auch von Liu & Wang verwendet, wie in [@fig-arctor-critc-architecture] zu erkennen ist.
 
 #figure(
   image("1-s2.0-S0007850625000642-gr3_lrg.jpg", width: 80%),
@@ -225,51 +218,50 @@ Dieses Vorgehen des symmetrischen Samples wird auch von Liu & Wang verwendet, wi
   ],
 ) <fig-arctor-critc-architecture>
 
-Näher wird auch erklärt, dass es sich um menschliche Demonstrationen handelt, die im vorraus erstellt wurden. Dabei wurden für jede Montageaufgabe (CPU-Kühlkörper, RAM, Lüfter) jeweils 30 erfolgreiche Trajektorien, also volle Bewegungsabläufe einer Montage, verwendet. 
-Hierbei wird "Erfolgreich" druch zwei Kritierien definiert. Zum einen darf sich das zu montierende Objekt nicht mehr als $0.1"mm"$ der Zielposition entfernt befinden.
- Zum anderen, sollte Ersteres erfüllt sein, muss der vorher tranierte *Binary Classifier*, ebenfalls mit einer Wahrscheinlichkeit von min. 97% die Montage als "1", also erfolgreich bewerten. 
- Hier wurde sich dazu entschieden, hoch qualitative menschliche Abläufe als Offline Daten zu verwenden. 
- Die genaue Vor- und Nachteile varrieren stark nach zu optimierenden Problem. Unter der Grundlage jedoch, dass Liu & Wang das Modell in der Realität tranieren, ist dieses vorgehen wenn auch aufwendig, 
- durchaus sinnvoll und erfolgreich, wie der Evaluation der Versuchsabläufe zu entnehmen ist.
+Näher wird auch erklärt, dass es sich um menschliche Demonstrationen handelt, die im vorraus erstellt wurden. Für jede Montageaufgabe (CPU-Kühlkörper, RAM, Lüfter) wurden jeweils 30 erfolgreiche Trajektorien, also vollständige Bewegungsabläufe einer Montage, verwendet. 
+"Erfolgreich" wird hierbei druch zwei Kritierien definiert. Zum einen darf sich das zu montierende Objekt nicht mehr als $0.1"mm"$ von der Zielposition entfernt befinden.
+ Andererseits muss, sofern Ersteres erfüllt ist, der zuvor tranierte *Binary Classifier*, die Montage ebenfalls mit einer Wahrscheinlichkeit von min. 97% als "1", also erfolgreich bewerten. 
+ Hier wurde entschieden, hochqualitative menschliche Abläufe als Offline-Daten zu verwenden. 
+ Die genauen Vor- und Nachteile variieren stark je nach zu optimierendem Problem. Unter der Voraussetzung, dass Liu & Wang das Modell in der Realität trainieren, ist dieses Vorgehen, wenn auch aufwendig, durchaus sinnvoll und erfolgreich, wie der Evaluation der Versuchsabläufe zu entnehmen ist.
 
 == Layer Normalization 
 
-Eine fundamentale Schwäche von Deep Reinforcement Learning ist der Umgang mit unbekannten Daten, das sogenannte *Out-of-Distribution (OOD)* Problem. Bei Actor-Critic-Architekturen mit OOD Daten sind Diese meist nicht definiert während dem Lernprozess von RL. 
-Dabei passiert es, dass der Critic die neuen eingehenden Daten stark "überschätzt", da dieser die Daten mit den Offline Daten aus dem Demo-Buffer in Beziehung bringt. 
-Folge daraus in der Praxis sind Instabilitäten im Traning und *Divergierung des Critics (Overestimation)*, während er versucht den immer größer werdenen Werten zu folgen @thrun_issues_1994. 
-Die Lösung von Ball et al. nutzt Normalisierung der Werte innerhalb des Neuronalen Netzes, damit Werte innerhalb eines Zahlenbereiches (meist mit einem Mittelwert $mu = 0$ und Standardabweichung $sigma = 1$) bleiben. 
-Dabei ist es möglich, dass der RL-Ansatz mit Layer Normalization trotzdem neues lernen kann, ohne zu stark von den Demo Daten limitiert zu sein @ba_layer_2016. 
+Eine fundamentale Schwäche von Deep Reinforcement Learning ist der Umgang mit unbekannten Daten, das sogenannte *Out-of-Distribution (OOD)*-Problem. Bei Actor-Critic-Architekturen sind diese Daten während des Lernprozesses von RL meist nicht definiert. 
+Dabei passiert es, dass der Critic die neuen eingehenden Daten stark "überschätzt", da er diese mit den Offline-Daten aus dem Demo-Buffer in Beziehung setzt. 
+Die Folge sind Instabilitäten im Training und eine *Divergierung des Critics (Overestimation)*, während er versucht, den immer größer werdenden Werten zu folgen @thrun_issues_1994. 
+Die Lösung von Ball et al. nutzt Normalisierung der Werte innerhalb des neuronalen Netzes, damit diese Werte innerhalb eines Zahlenbereichs (in der Regel einem Mittelwert $mu = 0$ und Standardabweichung $sigma = 1$) bleiben. 
+Dabei ist es möglich, dass der RL-Ansatz mit Layer Normalization trotzdem Neues lernen kann, ohne zu stark von den Demo-Daten limitiert zu sein @ba_layer_2016. 
 Mathematisch wurde das wie folgt bewiesen und umgesetzt: $norm(Q(s, a)) <= norm(w)$ @ball_efficient_nodate. 
 Dies bedeutet, dass der vorhergesagte $Q$-Wert niemals größer werden kann als die Norm der Netzwerkgewichte $w$.
 
 
-Die Umsetzung von Liu & Wang der Layer Normalization ist Anzunehmen, da ansonsten eine Umsetzung von RLPD nicht möglich wäre. Wie die Gleichung der $Q$-Loss Funktion zeigt, nutzen die Autoren die standardmäßige Soft-Bellman-Optimierung des SAC-Algorithmus:
+Die Umsetzung von Liu & Wang der Layer Normalization durch Liu & Wang ist anzunehmen, da eine Umsetzung von RLPD ansonsten nicht möglich wäre. Wie die Gleichung der $Q$-Loss-Funktion zeigt, nutzen die Autoren die standardmäßige Soft-Bellman-Optimierung des SAC-Algorithmus:
 
 $ cal(L)_Q (phi) = E_(s,a,s') [ ( Q_phi (s, a) - (R (s, a) + gamma E_(a' ~ pi_theta) [Q_(overline(phi)) (s', a')]) )^2 ] $ <eq:critic>
 
-Diese Funktion minimiert lediglich die Differenz zwischen der Vorhersage $Q_phi$ und dem Zielwert $Q_pi$. Sie beinhaltet jedoch keinen Mechanismus, der das Netzwerk vor der erwähnten *Overestimation* bei unbekannten Daten schützt. 
+Mit dieser Funktion wird lediglich die Differenz zwischen der Vorhersage $Q_phi$ und dem Zielwert $Q_pi$ minimiert. Sie beinhaltet jedoch keinen Mechanismus, der das Netzwerk vor der erwähnten *Overestimation* bei unbekannten Daten schützt. 
 Die Stabilisierung muss daher strukturell innerhalb der Funktion $Q_phi (s, a)$ selbst erfolgen. 
 Während Ball et al. hierfür explizit *Layer Normalization* vor der letzten Ausgabeschicht vorschreiben ($norm(Q) <= norm(w)$), lassen Liu und Wang die genaue Innenarchitektur ihres Critics im Paper unerwähnt. 
 Es ist möglich, dass die Autoren sich hier implizit auf die Beschaffenheit des *Reward Classifiers* verlassen, der den Reward hart auf das Intervall $[0, 1]$ begrenzt. 
-Unter der Annahme, dass sie die RLPD-Methodik vollständig adaptiert haben, ist der Einsatz dieser Normalisierungsschichten zwingend erforderlich, da der Critic sonst bei der Verarbeitung der Daten aus den zwei Buffern zur Divergenz neigen würde. 
+Unter der Annahme, dass die Autoren die RLPD-Methodik vollständig adaptiert haben, ist der Einsatz dieser Normalisierungsschichten zwingend erforderlich, da der Critic sonst bei der Verarbeitung der Daten aus den zwei Buffern sonst zur Divergenz neigen würde. 
 
 == Sample Efficient RL
 
-Die Designentscheidung eines zweiten Offline Buffers führt dazu, dass Sampling aufwendiger wird. Zur Minimierung des Aufwands wird die Geschwindigkeit der Lernprozesses modifiziert, um Effizienz beizubehalten. 
-Eine Möglichkeit dabei ist es den UTP-Wert zu erhöhen, den Wert der vorgibt, wie viele Lernschritte (Critic passt Gewichte an) pro Arbeitsschritt (Actor führt Handlung aus) durchführt werden. 
-Jedoch läuft man damit Gefahr, dass der RL-Algorithmus in *Überanpassung (Overfitting)* verfällt. Die Überanpassung beschreibt einen Zustand, indem ein Modell sich zu stark an einem lokalen Optimum angepasst hat und irrelevante Faktoren berücksichtigt @noauthor_what_2021.
-Zum besseren Verständnis wird als veranschaulichtes Beispiel oft der Unterschied zwischen "Verstehen" und "Auswendig lernen" aufgewiesen. 
-Wenn ein RL-Algorithmus zu exakt gerlernt hat, eine Aufgabe zu lösen, sorgt der Zustand der Überanpassung dafür, dass die spezifisch gelernte Aufgabe mit einer hohen Genaugikeit gelöst wird, jedoch bei leichten Änderungen bereits scheitert. 
+Die Designentscheidung für einen zweiten Offline-Buffer führt zu einem aufwendigeren Sampling. Um den Aufwand zu minimieren und die Effizienz beizubehalten, wird die Geschwindigkeit des Lernprozesses modifiziert.  
+Eine Möglichkeit ist es, den UTP-Wert zu erhöhen. Dieser gibt an, wie viele Lernschritte (der Critic passt die Gewichte an) pro Arbeitsschritt (der Actor führt eine Handlung aus) durchgeführt werden.
+Dabei besteht jedoch die Gefahr, dass der RL-Algorithmus in *Überanpassung (Overfitting)* verfällt. Dieser beschreibt einen Zustand, in dem sich ein Modell zu stark an einem lokalen Optimum angepasst hat und irrelevante Faktoren berücksichtigt @noauthor_what_2021.
+Zum besseren Verständnis wird oft der Unterschied zwischen "Verstehen" und "Auswendig lernen" anhand eines veranschaulichten Beispiels aufgezeigt. 
+Wenn ein RL-Algorithmus zu exakt gelernt hat, eine Aufgabe zu lösen, sorgt der Zustand der Überanpassung dafür, dass die spezifisch gelernte Aufgabe mit einer hoher Genaugikeit gelöst wird, bei leichten Änderungen jedoch bereits scheitert. 
 Als Lösung dafür nennen Ball et. at. einige Möglichkeiten, wobei sie sich für die Methoden mit *Random Ensemble Distillation* und *Random Shift Augmentations* entscheiden. 
-Ersters beschreibt die Verwendung mehrer Critics, die in Wechselwirkung zueinander sich vor Divergenz schützen. Zweiteres wird genutzt, da Ball et. al. ebenfalls Bilder zum Traning verwendet. 
-Dabei werden die Bilder um wenige Pixel zufällig verschoben, wodurch ein Art _"wackeln"_ imitiert wird. 
-Das ist besonders nützlich, da so der RL-Algorithmus lernt den RAM-Sockel wirklich als RAM-Sockel zu erkennen und sich nicht statisch auf Pixelpositionen versteift (Overfitting).
+Ersteres beschreibt die Verwendung mehrerer Critics, die sich gegenseitig vor Divergenz schützen. Letzteres wird genutzt, da Ball et. al. ebenfalls Bilder zum Training verwendet. 
+Dabei werden die Bilder um wenige Pixel zufällig verschoben, wodurch eine Art _"Wackeln"_ imitiert wird. 
+Das ist besonders nützlich, da so der RL-Algorithmus so lernt den RAM-Sockel wirklich als solchen zu erkennen und sich nicht auf statische Pixelpositionen versteift (Overfitting).
 
-Indizien für Overfittingprävention im Paper von Liu & Wang geht vor allem hervor bei der Extraktion von Daten aus Bildern. 
-Sie nutzen dafür ein vortraniertes ResNet-10 Netzwerk zur Bilderkennung, dass bereits schon auf Millionen von Daten traniert wurde, wodurch davon auszugehen ist, dass dieses bereits gegen Overfitting besteht. 
-ResNet-10 ist eine vereinfachte Version des bekannten ResNet, dass Bilder auf relevante Daten extrahiert, mit denen viele RL-Algorithmen arbeiten können @gong_resnet10_2022. 
-Im Paper werden die Kamerabilder des Robters ins ResNet gesetzt, wodurch das Problem der geringen Datenmenge aus 1400 Bildern, vorgebeugt wird. 
-Diese Daten werden dann in den Binary Classifier eingespeist, der dann Abläufe des Actors bewertet und mit in die Learner-Architektur liefert. Die Actor-Learner-Architektur ist gut aus @fig-arctor-learner-classifier zu entnehmen.
+Indizien für eine Overfitting-Prävention sind im Paper von Liu & Wang vor allem bei der Extraktion von Daten aus Bildern zu finden. 
+Dazu nutzen sie ein vortrainiertes ResNet-10-Netzwerk zur Bilderkennung, das bereits auf Millionen von Daten trainiert wurde. Dadurch ist davon auszugehen, dass dieses Netzwerk gegen Overfitting resistent ist. 
+ResNet-10 ist eine vereinfachte Version des bekannten ResNets, das Bilder auf relevante Daten extrahiert, mit denen viele RL-Algorithmen arbeiten können @gong_resnet10_2022. 
+In dem Paper werden die Kamerabilder des Roboters ins ResNet gesetzt, wodurch dem Problem der geringen Datenmenge von 1400 Bildern, vorgebeugt wird. 
+Diese Daten werden dann in den Binary Classifier eingespeist, der die Abläufe des Actors bewertet und die Ergebnisse an die Learner-Architektur liefert. Die Actor-Learner-Architektur ist in @fig-arctor-learner-classifier gut zu erkennen.
 
 #figure(
   image("1-s2.0-S0007850625000642-gr1_lrg.jpg", width: 80%),
@@ -278,46 +270,45 @@ Diese Daten werden dann in den Binary Classifier eingespeist, der dann Abläufe 
   ],
 ) <fig-arctor-learner-classifier>
 
-Zusätzlich dazu wird *"Image Cropping"* verwendet, wodurch Bilder auf 128×128 in relevante Bereiche verkleinert werden. 
-Jedoch geht keine direkte Nutzung von *Random Shift Augmentations*,  *Random Ensemble Distillation* oder anderer genannter Methoden aus dem Paper von Ball et. al. hervor, die als essenzielle Designentscheidung postuliert wurden, 
-um RLPD umzusetzen und Overfitting vorzubeugen. Besonders die *Random Shift Augmentation* wäre eine robuste Verbesserung und würde die Statik, die in den Bildern von Liu & Wang gegeben ist, vorbeugen.
+Zusätzlich wird die Methode *"Image Cropping"* verwendet, um Bilder auf eine Größe von 128×128 Pixeln zu verkleinern und sie auf relevante Bereiche zu beschränken.
+Eine direkte Nutzung von *Random Shift Augmentations*,  *Random Ensemble Distillation* oder anderer im Paper von Ball et. al. genannter Methoden, die als essenzielle Designentscheidung postuliert wurden, geht jedoch nicht hervor.
+um RLPD umzusetzen und Overfitting vorzubeugen. Besonders die *Random Shift Augmentation* wäre eine robuste Verbesserung und würde der Statik, die in den Bildern von Liu & Wang gegeben ist, vorbeugen.
 
 = Diskussion und Evaluation
 
-Die im Paper präsentierte Ergebnisse und Methodik zur Lösung eines Montageproblems, indem Feinmotorik, Schrauben und präzise Kraftverhältnisse benötigt werden, wurden mit Technologien und modernen Ansätzen der Informatik beeindruckend angegangen. 
-Die wissenschaftliche Grundlage der Problematik, die zuerst Formal mit einem MDP formuliert und anschließend per RLPD approximiert wurde, ist technisch anspruchsvoll und schneidet stark mit Transfergebieten wie Maschinenbau, Elektortechnik, Physik und der Informatik. 
-Der als Kern gewählte RLPD Ansatz, wurde aus Gründen der Dateneffizienz und Lerngeschwindigkeit gewählt. 
-Die Umsetzung des RLPDs wurde in der Ausarbeitung einmal anhand des genutzten Papers von Bell et. al. für RLPD grundlegend erklärt und anschließen mit der Umsetzung von Liu & Wang verglichen. 
-Dabei spielt die Reproduzierbarkeit von Arbeiten eine wichtige Rolle in der Wissenschaft. Es fällt auf, dass Liu & Wang auf eine detaillierte Spezifikation ihrer Critic-Architektur verzichten und diese Designentscheidung unerwähnt lassen. 
+Die im Paper präsentierten Ergebnisse und die Methodik zur Lösung eines Montageproblems, bei dem Feinmotorik, Schrauben und präzise Kraftverhältnisse erforderlich sind, wurden mit beeindruckenden Technologien und modernen Ansätzen der Informatik angegangen. 
+Die wissenschaftliche Grundlage der Problematik wurde zuerst formal mit einem MDP formuliert und anschließend mit dem RLPD-Ansatz approximiert. Dieser Ansatz ist technisch anspruchsvoll und berührt Transfergebiete wie Maschinenbau, Elektrotechnik, Physik und Informatik. 
+Der gewählte RLPD-Ansatz wurde aus Gründen der Dateneffizienz und Lerngeschwindigkeit ausgewählt. 
+Die Umsetzung des RLPD wurde in der Ausarbeitung anhand des genutzten Papers von Bell et. al. grundlegend erklärt und anschließend mit der Umsetzung von Liu & Wang verglichen. 
+Dabei spielt die Reproduzierbarkeit von Arbeiten eine wichtige Rolle in der Wissenschaft. Es fällt auf, dass Liu und Wang auf eine detaillierte Spezifikation ihrer Critic-Architektur verzichten und diese Designentscheidung unerwähnt lassen. 
 Da der Standard-SAC-Algorithmus ohne diese Modifikation in einem hybriden Setting zu Instabilitäten neigt, bleibt unklar, durch welchen Mechanismus die Autoren die hohe Erfolgsquote des Modells sicherstellen. 
-Diese Intransparenz erschwert nicht nur die Reproduktion der Ergebnisse, sondern lässt auch offen, ob der Erfolg auf einer robusten Architektur oder auf der Verwendung von Human-in-the-Loop (HIL) zurückzuführen ist. 
+Diese Intransparenz erschwert nicht nur die Reproduktion der Ergebnisse, sondern lässt auch offen, ob der Erfolg auf einer robusten Architektur oder der Verwendung von Human-in-the-Loop (HIL) beruht. 
 
-Die Verwendung von HIL in den Paper ist an vielen stellen sehr diskret und geht nicht in Tiefe darauf ein, wie diese menschlichen Eingriffe aussahen. 
-In vielen Passagen werden die Eingriffe angesprochen und erwähnt, aber wie viele tatsächlich es sind und diese aussehen, wird offen gelassen, obwohl grade die Menge menschlicher Einwirkungen die Qualität der konstruierten RLPDs unterstreichen würden. 
-Das die Lerngeschwindkeit deutlich erhöht wird, ist beim mehrfachen Eingreifen und korrigieren des Menschen selbstverständlich. 
-Dementsprechend ist der Vergleich zwischen anderen RL-Ansätzen wie BC, SAC und DP unzureichend, wenn der RLPD + HIL verglichen wird. 
-Eine Ausnahme scheint hier der HG-Dagger Vergleich zu sein. Beim HG-Dagger wurde die "gleiche Anzahl an Eingriffen wie RL" vorgenommen, wobei auch hier wieder die vage Äußerung von "Interventions" problematisch bei der Validierung des Lernprozesses ist. 
+Die Verwendung von HIL in den Papers ist an vielen Stellen sehr diskret und geht nicht in die Tiefe, was die Art und Weise dieser menschlichen Eingriffe betrifft. 
+In vielen Passagen werden die Eingriffe angesprochen und erwähnt, aber wie viele es tatsächlich sind und wie diese aussehen, bleibt offen, obwohl gerade die Menge der menschlichen Einwirkungen die Qualität der konstruierten RLPDs unterstreichen würde. 
+Dass die Lerngeschwindigkeit deutlich erhöht wird, ist beim mehrfachen Eingreifen und Korrigieren durch den Menschen selbstverständlich. 
+Dementsprechend ist der Vergleich zwischen anderen RL-Ansätzen wie BC, SAC und DP unzureichend, wenn der RLPD + HIL berücksichtigt wird.  
+Eine Ausnahme scheint hier der HG-Dagger-Vergleich zu sein. Beim HG-Dagger wurden "so viele Eingriffe wie in RL" vorgenommen, wobei auch hier wieder die vage Formulierung von "Interventions" problematisch bei der Validierung des Lernprozesses ist. 
 
-Zudem fehlt es an Variantion im Lernprozess und Test-Abläufen. Während des Lernprozesses werden identische Bauteile mehrmals unter gleicher Ausgangs- und Montageposition montiert. 
+Zudem fehlen Variationen im Lernprozess und in den Testabläufen. Während des Lernprozesses werden identische Bauteile mehrfach unter gleicher Ausgangs- und Montageposition montiert. 
 Bilder werden statisch ins System geladen, wodurch Overfitting eine Begründung für die hohen Erfolgsergebnisse sein könnte. 
-In der Literatur zum visuellen Reinforcement Learning with Prior Data gilt Datenaugmentation als Standard, um zu verhindern, dass das neuronale Netz lediglich statische Pixel-Konstellationen auswendig lernt @ball_efficient_nodate. 
-Da der Versuchsaufbau in einer kontrollierten Laborumgebung stattfand, besteht der begründete Verdacht, dass die Policy $pi_theta$ weniger eine intelligente Reaktionsfähigkeit auf Systemdynamiken erlernt hat, 
-sondern vielmehr eine Überanpassung an die fixe Kameraperspektive und Beleuchtung angenommen hat.
+In der Literatur zum visuellen Reinforcement Learning with Prior Data gilt die Datenaugmentation als Standard, um zu verhindern, dass das neuronale Netz lediglich statische Pixelkonstellationen auswendig lernt @ball_efficient_nodate. 
+Da der Versuchsaufbau in einer kontrollierten Laborumgebung stattfand, besteht der begründete Verdacht, dass die Policy $pi_theta$ keine intelligente Reaktionsfähigkeit auf Systemdynamiken ist, sondern sich vielmehr an die fixe Kameraperspektive und Beleuchtung angepasst hat.
 
 Der Ansatz der Autoren stützt sich zudem auf einen Demo-Buffer, der mit 30 erfolgreichen, menschlichen Trajektorien gefüllt ist. 
-Während dieses Vorgehen die Dateneffizienz des Lernprozesses zweifellos steigert, verschiebt es den Aufwand lediglich vom Training auf die Datenerhebung. 
-Ein System, das auf hochpräzise menschliche Abläufe angewiesen ist, widerspricht teilweise dem Ziel der autonomen Robotik, die auch mit imperfekten Daten umgehen sollte. 
-Verstärkt wird dieser Argument durch den "Human-in-the-Loop" (HIL) Ansatz, der ebenfalls während der Traningsphase, hohe menschliche Aufmerksamkeit und Expertenwissen fordert, wobei hier die Häufigkeit der Eingriffe deutlichen Aufschluss liefern würde. 
+Dieses Vorgehen steigert zwar zweifellos die Dateneffizienz des Lernprozesses, verschiebt den Aufwand jedoch lediglich vom Training auf die Datenerhebung. 
+Ein System, das auf hochpräzise menschliche Abläufe angewiesen ist, widerspricht dem Ziel der autonomen Robotik teilweise, da diese auch mit imperfekten Daten umgehen können sollte. 
+Dieses Argument wird durch den "Human-in-the-Loop" (HIL) verstärkt, bei dem während der Trainingsphase ebenfalls hohe menschliche Aufmerksamkeit und Expertenwissen erforderlich sind. Die Häufigkeit der Eingriffe würde hier deutlichen Aufschluss liefern. 
 
 == Fazit
 
-Die vorliegende Arbeit untersuchte die Anwendung von hybriden Lernstrategien im Kontext der Präzisionsmontage. 
-Die Modellierung des Montageproblems als Markov Decision Process (MDP) und die Nutzung von RLPD zeigen das Potenzial auf, starre Regelwerke durch lernfähige Algorithmen zu ersetzen. 
-Für zukünftige Arbeiten an der Schnittstelle von Informatik und Maschinenbau bleibt die Herausforderung bestehen, solche Systeme transparent zu postulieren um Rekonstruierbarkeit zu fördern.
-Grundsätzlich ist die hohe Erfolgsquote der Arbeit von Liu & Wang in Bezug auf den HG-Dagger Lernprozess Vergleich eindeutig. Die darauffolgenden Testläufe sprechen ebenfalls für sich und liefern eindeutig die Erfolgreiche Umsetzung der Montage nach dem Lernen.
-Jedoch ist es nicht eindeutig, ob diese Erfolgsquote wirklich durch den RLPD erreicht wurde, oder die Hohe Anzahl an HIL-Eingriffen zurückzuführen ist. Grund dafür ist die mangelnde Dokumentation der Eingriffe unter menschliches Wirken. 
-Zudem geht hervor, dass der Impedanz-Controller ein fundamentaler Faktor bei der Erfolgsquote darstellt. Aufgrund des fehlenden Aufbereitung des Vergleiches beim Lernprozess zwischen anderen Algorithmen, wird nicht klar, ob diese auch den Impedanz-Controller nutzen.
-Ohne einen Impedanz-Controller sind die Vergleiche nicht tragfähig, da ein deutlicher Vorteil gegenüber den _"rohen"_ Algorithmen vorliegt. Eine bessere Aufbereitung und Transparenz des Vergleiches wäre hier ausschlaggebend für die Validierung der Ergebnisse.
+In der vorliegenden Arbeit wurde die Anwendung hybrider Lernstrategien im Kontext der Präzisionsmontage untersucht. 
+Die Modellierung des Montageproblems als Markov-Decision-Process (MDP) und die Nutzung von RLPD zeigen das Potenzial auf, starre Regelwerke durch lernfähige Algorithmen zu ersetzen. 
+Für zukünftige Arbeiten an der Schnittstelle von Informatik und Maschinenbau bleibt die Herausforderung bestehen, solche Systeme transparent zu gestalten, um die Rekonstruierbarkeit zu fördern.
+Grundsätzlich ist die hohe Erfolgsquote der Arbeit von Liu und Wang in Bezug auf den HG-Dagger-Lernprozess eindeutig. Die darauffolgenden Testläufe sprechen ebenfalls für sich und liefern einen eindeutigen Nachweis für die erfolgreiche Umsetzung der Montage nach dem Lernen.
+Es ist jedoch nicht eindeutig, ob diese Erfolgsquote wirklich durch den RLPD erreicht wurde oder ob sie auf die hohe Anzahl an HIL-Eingriffen zurückzuführen ist. Grund dafür ist die mangelnde Dokumentation der Eingriffe unter menschlichem Einfluss. 
+Zudem geht hervor, dass der Impedanz-Controller ein fundamentaler Faktor für die Erfolgsquote ist. Da der Lernprozess zwischen anderen Algorithmen nicht aufbereitet wurde, ist unklar, ob diese auch den Impedanz-Controller nutzen.
+Ohne einen Impedanz-Controller sind die Vergleiche nicht tragfähig, da ein deutlicher Vorteil gegenüber den _"rohen"_ Algorithmen vorliegt. Eine bessere Aufbereitung und mehr Transparenz beim Vergleich wären hier ausschlaggebend für die Validierung der Ergebnisse.
 
 // ==========================================
 // LITERATURVERZEICHNIS

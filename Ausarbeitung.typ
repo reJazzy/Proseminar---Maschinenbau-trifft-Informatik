@@ -125,13 +125,13 @@ Die Autoren modellieren ihr Montageproblem als ein Markov-Decision-Process (MDP)
 - *$A$ (Action Space)*: Die Handlungsmöglichkeiten werden über die kartesische Koordinatenposition des Roboterarms und den Griffzustand definiert.
 - *$P$ und $p$ (Wahrscheinlichkeiten)*: Da der Roboterarm kaum immer von der gleichen Stelle aus mit der Montage beginnt und das Mainboard nicht immer im exakten Millimeterbereich gleich liegt, muss eine Wahrscheinlichkeitsverteilung $P(s)$ definiert werden, die unterschiedliche Start-Zustände modelliert. Zudem stellt $p$ nicht mehr einfache Wahrscheinlichkeiten an einer Transition dar, sondern repräsentiert die gesamte Dynamik des Systems. 
   Unabhängig davon, wie präzise der Roboterarm ist, wird er mit einer gewissen physikalischen Schwankung von der angegebenen Trajektorie abweichen. Aufgrund der physikalischen Komplexität ist $p$ uns nicht bekannt, sondern wird durch Reinforcement Learning approximiert.
-- *$R$ (Reward Function)*: Die Autoren haben für $R$ ein binäres Klassifizierungssystem gewählt, das anhand zuvor tranierter Demos beurteilt, ob eine Montage erfolgreich war, oder fehlgeschlagen ist. Diese wird als Reward/Binary-Classifier bezeichnet.
+- *$R$ (Reward Function)*: Die Autoren haben für $R$ ein binäres Klassifizierungssystem gewählt, das anhand zuvor tranierten Demos beurteilt, ob eine Montage erfolgreich war, oder fehlgeschlagen ist. Diese wird als Reward/Binary-Classifier bezeichnet.
 - *$gamma$ (Discount Factor)*: Erfüllt den exakt selben Zweck wie im vorher aufgeführten Beispiel [@fig-mpd-graph].
 
 Bei näherer Betrachtung der Komponenten $S$ und $p$ zeigen sich die zentralen Herausforderungen dieses Ansatzes: die *stochastische Systemdynamik* (Nicht-Determinismus) und die *enorme Dimensionalität* des Zustandsraums. 
 // Letztere wird besonders bei den Sensordaten deutlich: Die beiden Handgelenkskameras (RealSense D405) liefern einen kontinuierlichen Strom an RGB-Bilddaten. 
 // Bei einer Frequenz von 30 Hz und einem Crop von 128×128 Pixeln müssen pro Sekunde knapp 1 Million Bildpunkte verarbeitet werden. Unter der Annahme einer Standard-Farbtiefe (8-Bit pro Kanal) entspricht dies einem Datenvolumen von ca. 3 MB/s.
-Anhand dieser Grundlage ist es nicht möglich, eine _"wahre"_ optimale Policy $(pi_*)$ zu finden. Stadessen wird diese durch Reinforcement approximiert. 
+Anhand dieser Grundlage ist es nicht möglich, eine _"wahre"_ optimale Policy $(pi_*)$ zu finden. Stattdessen wird diese durch Reinforcement approximiert. 
 Um sich einer optimalen Policy überhaupt annähern zu können, muss eine *parametrisierte Funktionsapproximation* erfolgen. 
 Das Paper nutzt hierfür einen sogenannten Soft-Actor-Critic-Ansatz (SAC) mit signifikanten Designerweiterungen, der zum gewählten *Reinforcement Learning with Prior Data (RLPD)* führt. 
 Dabei wird das komplexe Optimierungsproblem auf zwei neuronale Netze aufgeteilt, die gegenseitig voneinander lernen. Im Folgenden wird das Zusammenspiel von Actor und Critic (SAC) veranschaulicht @haarnoja_soft_2018. 
@@ -155,7 +155,7 @@ Die Autoren des Papers nutzen zwei neuronale Netzwerke beim SAC: Eines für den 
 
 === Critic
 
-Der Critic bewertet die Aktuelle Einschätzung des Actors und vergleicht sie mit der tatsächlichen Situation und Zukunft. Dazu wurde folgende Loss-Funktion $cal(L_Q)$ aufgestellt:
+Der Critic bewertet die aktuelle Einschätzung des Actors und vergleicht sie mit der tatsächlichen Situation und Zukunft. Dazu wurde folgende Loss-Funktion $cal(L_Q)$ aufgestellt:
 
 $ cal(L)_Q (phi) = E_(s,a,s') [ ( Q_phi (s, a) - (R (s, a) + gamma E_(a' ~ pi_theta) [Q_(overline(phi)) (s', a')]) )^2 ] $ <eq:critic>
 
@@ -174,7 +174,7 @@ Der Actor steuert den Roboter, da er die tatsächliche Policy $(phi_theta)$ defi
 
 $ cal(L)_pi (theta) = -E_s [ E_(a ~ pi_theta (theta)) [Q_phi (s, a)] + tau Phi(pi_theta ( . | s)) ] $ <eq:actor>
 
-Die Funktion $cal(L)_pi$ setzt sich aus zwei Zielen zusammen: Einerseits Gierig (Exploitation) zu sein und andererseits Neugierig (Exploration). 
+Die Funktion $cal(L)_pi$ setzt sich aus zwei Zielen zusammen: Einerseits gierig (Exploitation) zu sein und andererseits neugierig (Exploration). 
 Die Subtraktion zu Beginn der Funktion wandelt das Maximierungsproblem in ein Minimierungsproblem um, da Computer besser darin sind, Fehler zu minimieren.
 Die Maximierung des Rewards, also die Suche nach dem globalen Optimum einer Funktion $f(x)$ ist für uns gleichbedeutend mit der Suche nach dem globalen Minimum $-f(x)$, jedoch einfacher für Computer umzusetzen.
 Der Teil, der die Gier des Actors steuert, ist in diesem Teil enthalten: $E_(a ~ pi_theta (theta)) [Q_phi (s, a)]$. Dabei hat das $a ~ pi_theta (theta)$ eine relativ wichtige Bedeutung. 
@@ -192,9 +192,9 @@ Der Actor leitet den Roboter unter der Berücksichtigung des Critics und eigenen
 = Effizientes Online Reinforcement Learning mit offline Daten - RLPD
 
 Deep Reinforcement Learning (RL) konnte in vielen Feldern bereits Erfolge verzeichnen wie in Atari oder Go @tsividis_human_nodate @silver_mastering_2016.
-In diesen Beispielen werden hohe Erfolge durch Reinforcement Learning und viele Online Interaktionen erzielt, dass durch Simulationen gut umsetzbar ist. 
-Leider sind Probleme, wie das Montageproblem von Liu & Wang, in der Realität oft deutlich komplexer, als in einer Simulation @liu_vision_2025. Rewards sind meist absthrahiert, während sie in der Realität schwer greifbar und hochdimensional sind. 
-Die Autoren des Papers Ball et al. postulieren den Ansatz von *RLPD* @ball_efficient_nodate. Dieser Unterscheidet sich von Deep RL und SAC + Offline Daten. 
+In diesen Beispielen werden hohe Erfolge durch Reinforcement Learning und viele Online Interaktionen erzielt, was durch Simulationen gut umsetzbar ist. 
+Leider sind Probleme, wie das Montageproblem von Liu & Wang, in der Realität oft deutlich komplexer, als in einer Simulation @liu_vision_2025. Rewards sind meist abstrahiert, während sie in der Realität schwer greifbar und hochdimensional sind. 
+Die Autoren des Papers Ball et al. postulieren den Ansatz von *RLPD* @ball_efficient_nodate. Dieser unterscheidet sich von Deep RL und SAC + Offline Daten. 
 Liu & Wang stützen sich stark mit ihrer Architektur auf den Ansatz aus dem Paper von Ball et al., wobei in RLPD drei erweiterte Designentscheidungen den Ansatz prägen. 
 Im Folgenden werden wir die Motivation hinter diesen Erweiterungen anschauen und deren Umsetzung von Liu & Wang.
 
@@ -202,7 +202,7 @@ Im Folgenden werden wir die Motivation hinter diesen Erweiterungen anschauen und
 
 Beim klassischen Deep Reinforcement Learning dauert es in der Anfangsphase besonders lange, bis der Algorithmus eine Richtung ermittelt hat, in der sich die optimale Policy befindet. 
 Dieser Prozess der Richtungfindung kann jedoch minimiert werden, indem beim Deep RL im Voraus bereits suboptimale Policies oder menschliche Demonstrationen die Richtung vorgeben. Mit diesen Demonstrationen gehen jedoch Probleme einher. 
-Während der RL-Algorithmus lernt, werden in kurzer Zeit bereits eine Vielzahl von Durchläufen in den Replay-Buffer geladen. Das ist der Speicher, in dem alle Epochen gespeichert werden, und die geladenen Daten überwiegen schnell die selbst generierten. 
+Während der RL-Algorithmus lernt, werden in kurzer Zeit bereits eine Vielzahl von Durchläufen in dem Replay-Buffer geladen. Das ist der Speicher, in dem alle Epochen gespeichert werden, und die geladenen Daten überwiegen schnell die selbst generierten. 
 Ball et al. erkannten dies ebenfalls und entwarfen basierend auf Ross & Bagnell (2012) eine symmetrische Replay-Buffer-Architektur @ross_agnostic_2012. 
 Dabei werden statt nur einem Replay-Buffer, zwei Buffer angelegt: Einer speichert und nimmt die Online-Daten des RL-Algorithmus auf, der andere dient als Offline-Buffer und speichert beispielsweise die eben genannten menschlichen Demonstrationen. 
 Das hat vor allem den Vorteil, dass die vorgefertigten Richtungsgeber nicht unter der schnell wachsenden Menge an RL-Abläufen untergehen. 
@@ -219,8 +219,8 @@ Dieses Vorgehen des symmetrischen Samplen wird auch von Liu & Wang verwendet, wi
 ) <fig-Actor-critc-architecture>
 
 Näher wird auch erklärt, dass es sich um menschliche Demonstrationen handelt, die im Voraus erstellt wurden. Für jede Montageaufgabe (CPU-Kühlkörper, RAM, Lüfter) wurden jeweils 30 erfolgreiche Trajektorien, also vollständige Bewegungsabläufe einer Montage, verwendet. 
-"Erfolgreich" wird hierbei durch zwei Kritierien definiert. Zum einen darf sich das zu montierende Objekt nicht mehr als $0.1"mm"$ von der Zielposition entfernt befinden.
- Andererseits muss, sofern Ersteres erfüllt ist, der zuvor tranierte *Binary Classifier*, die Montage ebenfalls mit einer Wahrscheinlichkeit von min. 97% als "1", also erfolgreich bewerten. 
+"Erfolgreich" wird hierbei durch zwei Kriterien definiert. Zum einen darf sich das zu montierende Objekt nicht mehr als $0.1"mm"$ von der Zielposition entfernt befinden.
+ Andererseits muss, sofern Ersteres erfüllt ist, der zuvor tranierten *Binary Classifier*, die Montage ebenfalls mit einer Wahrscheinlichkeit von min. 97% als "1", also erfolgreich bewerten. 
  Hier wurde entschieden, hochqualitative menschliche Abläufe als Offline-Daten zu verwenden.
  Ebenfalls werden beide Buffer gleich gewichtet, indem ein Batch gleiche Menge an Daten aus beiden Buffern enthält. 
  Die genauen Vor- und Nachteile variieren stark je nach zu optimierendem Problem. Unter der Voraussetzung, dass Liu & Wang das Modell in der Realität trainieren, ist dieses Vorgehen, wenn auch aufwendig, durchaus sinnvoll und erfolgreich, wie der Evaluation der Versuchsabläufe zu entnehmen ist.
@@ -244,7 +244,7 @@ Mit dieser Funktion wird lediglich die Differenz zwischen der Vorhersage $Q_phi$
 Die Stabilisierung muss daher strukturell innerhalb der Funktion $Q_phi (s, a)$ selbst erfolgen. 
 Während Ball et al. hierfür explizit *Layer Normalization* vor der letzten Ausgabeschicht vorschreiben ($norm(Q) <= norm(w)$), lassen Liu und Wang die genaue Innenarchitektur ihres Critics im Paper unerwähnt. 
 Es ist möglich, dass die Autoren sich hier implizit auf die Beschaffenheit des *Reward Classifiers* verlassen, der den Reward hart auf das Intervall $[0, 1]$ begrenzt. 
-Unter der Annahme, dass die Autoren die RLPD-Methodik vollständig adaptiert haben, ist der Einsatz dieser Normalisierungsschichten zwingend erforderlich, da der Critic sonst bei der Verarbeitung der Daten aus den zwei Buffern sonst zur Divergenz neigen würde. 
+Unter der Annahme, dass die Autoren die RLPD-Methodik vollständig adaptiert haben, ist der Einsatz dieser Normalisierungsschichten zwingend erforderlich, da der Critic bei der Verarbeitung der Daten aus den zwei Buffern sonst zur Divergenz neigen würde. 
 
 == Sample Efficient RL
 
@@ -252,11 +252,11 @@ Die Designentscheidung für einen zweiten Offline-Buffer führt zu einem aufwend
 Eine Möglichkeit ist es, den UTP-Wert zu erhöhen. Dieser gibt an, wie viele Lernschritte (der Critic passt die Gewichte an) pro Arbeitsschritt (der Actor führt eine Handlung aus) durchgeführt werden.
 Dabei besteht jedoch die Gefahr, dass der RL-Algorithmus in *Überanpassung (Overfitting)* verfällt. Dieser beschreibt einen Zustand, in dem sich ein Modell zu stark an einem lokalen Optimum angepasst hat und irrelevante Faktoren berücksichtigt @noauthor_what_2021.
 Zum besseren Verständnis wird oft der Unterschied zwischen "Verstehen" und "Auswendig lernen" anhand eines veranschaulichten Beispiels aufgezeigt. 
-Wenn ein RL-Algorithmus zu exakt gelernt hat, eine Aufgabe zu lösen, sorgt der Zustand der Überanpassung dafür, dass die spezifisch gelernte Aufgabe mit einer hoher Genaugikeit gelöst wird, bei leichten Änderungen jedoch bereits scheitert. 
+Wenn ein RL-Algorithmus zu exakt gelernt hat, eine Aufgabe zu lösen, sorgt der Zustand der Überanpassung dafür, dass die spezifisch gelernte Aufgabe mit einer hohen Genauigkeit gelöst wird, bei leichten Änderungen jedoch bereits scheitert. 
 Als Lösung dafür nennen Ball et. at. einige Möglichkeiten, wobei sie sich für die Methoden mit *Random Ensemble Distillation* und *Random Shift Augmentations* entscheiden. 
 Ersteres beschreibt die Verwendung mehrerer Critics, die sich gegenseitig vor Divergenz schützen. Letzteres wird genutzt, da Ball et al. ebenfalls Bilder zum Training verwendet. 
 Dabei werden die Bilder um wenige Pixel zufällig verschoben, wodurch eine Art _"Wackeln"_ imitiert wird. 
-Das ist besonders nützlich, da so der RL-Algorithmus so lernt den RAM-Sockel wirklich als solchen zu erkennen und sich nicht auf statische Pixelpositionen versteift (Overfitting).
+Das ist besonders nützlich, da der RL-Algorithmus so lernt den RAM-Sockel wirklich als solchen zu erkennen und sich nicht auf statische Pixelpositionen versteift (Overfitting).
 
 Indizien für eine Overfitting-Prävention sind im Paper von Liu & Wang vor allem bei der Extraktion von Daten aus Bildern zu finden. 
 Dazu nutzen sie ein vortrainiertes ResNet-10-Netzwerk zur Bilderkennung, das bereits auf Millionen von Daten trainiert wurde. Dadurch ist davon auszugehen, dass dieses Netzwerk gegen Overfitting resistent ist. 
@@ -285,7 +285,7 @@ Dabei spielt die Reproduzierbarkeit von Arbeiten eine wichtige Rolle in der Wiss
 Da der Standard-SAC-Algorithmus ohne diese Modifikation in einem hybriden Setting zu Instabilitäten neigt, bleibt unklar, durch welchen Mechanismus die Autoren die hohe Erfolgsquote des Modells sicherstellen. 
 Diese Intransparenz erschwert nicht nur die Reproduktion der Ergebnisse, sondern lässt auch offen, ob der Erfolg auf einer robusten Architektur oder der Verwendung von Human-in-the-Loop (HIL) beruht. 
 
-Die Verwendung von HIL in den Paper ist an vielen Stellen sehr diskret und geht nicht in die Tiefe, was die Art und Weise dieser menschlichen Eingriffe betrifft. 
+Die Verwendung von HIL dem Paper ist an vielen Stellen sehr diskret und geht nicht in die Tiefe, was die Art und Weise dieser menschlichen Eingriffe betrifft. 
 In vielen Passagen werden die Eingriffe angesprochen und erwähnt, aber wie viele es tatsächlich sind und wie diese aussehen, bleibt offen, obwohl gerade die Menge der menschlichen Einwirkungen die Qualität der konstruierten RLPDs unterstreichen würde. 
 Dass die Lerngeschwindigkeit deutlich erhöht wird, ist beim mehrfachen Eingreifen und Korrigieren durch den Menschen selbstverständlich. 
 Dementsprechend ist der Vergleich zwischen anderen RL-Ansätzen wie BC, SAC und DP unzureichend, wenn der RLPD + HIL berücksichtigt wird.  

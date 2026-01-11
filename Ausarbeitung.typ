@@ -209,14 +209,14 @@ Das hat vor allem den Vorteil, dass die vorgefertigten Richtungsgeber nicht unte
 Damit beim Samplen aber auch die Gewichtung erhalten bleibt, wird aus beiden Buffern jeweils genau 50% der Daten entnommen. 
 Diese Designentscheidung erweist sich in der Evaluation als besonders effektiv, auch wenn sie alleine nicht ausreicht @ball_efficient_nodate.
 
-Dieses Vorgehen des symmetrischen Samplen wird auch von Liu & Wang verwendet, wie in [@fig-arctor-critc-architecture] zu erkennen ist.
+Dieses Vorgehen des symmetrischen Samplen wird auch von Liu & Wang verwendet, wie in [@fig-Actor-critc-architecture] zu erkennen ist.
 
 #figure(
   image("1-s2.0-S0007850625000642-gr3_lrg.jpg", width: 80%),
   caption: [
-    Arctor-Learner Architektur mit zwei Buffern - @liu_vision_2025
+    Actor-Learner Architektur mit zwei Buffern - @liu_vision_2025
   ],
-) <fig-arctor-critc-architecture>
+) <fig-Actor-critc-architecture>
 
 Näher wird auch erklärt, dass es sich um menschliche Demonstrationen handelt, die im vorraus erstellt wurden. Für jede Montageaufgabe (CPU-Kühlkörper, RAM, Lüfter) wurden jeweils 30 erfolgreiche Trajektorien, also vollständige Bewegungsabläufe einer Montage, verwendet. 
 "Erfolgreich" wird hierbei druch zwei Kritierien definiert. Zum einen darf sich das zu montierende Objekt nicht mehr als $0.1"mm"$ von der Zielposition entfernt befinden.
@@ -262,14 +262,14 @@ Indizien für eine Overfitting-Prävention sind im Paper von Liu & Wang vor alle
 Dazu nutzen sie ein vortrainiertes ResNet-10-Netzwerk zur Bilderkennung, das bereits auf Millionen von Daten trainiert wurde. Dadurch ist davon auszugehen, dass dieses Netzwerk gegen Overfitting resistent ist. 
 ResNet-10 ist eine vereinfachte Version des bekannten ResNets, das Bilder auf relevante Daten extrahiert, mit denen viele RL-Algorithmen arbeiten können @gong_resnet10_2022. 
 In dem Paper werden die Kamerabilder des Roboters ins ResNet gesetzt, wodurch dem Problem der geringen Datenmenge von 1400 Bildern, vorgebeugt wird. 
-Diese Daten werden dann in den Binary Classifier eingespeist, der die Abläufe des Actors bewertet und die Ergebnisse an die Learner-Architektur liefert. Die Actor-Learner-Architektur ist in @fig-arctor-learner-classifier gut zu erkennen.
+Diese Daten werden dann in den Binary Classifier eingespeist, der die Abläufe des Actors bewertet und die Ergebnisse an die Learner-Architektur liefert. Die Actor-Learner-Architektur ist in @fig-Actor-learner-classifier gut zu erkennen.
 
 #figure(
   image("1-s2.0-S0007850625000642-gr1_lrg.jpg", width: 80%),
   caption: [
-    Arctor-Learner Architektur und Binary/Reward Classifier - @liu_vision_2025
+    Actor-Learner Architektur und Binary/Reward Classifier - @liu_vision_2025
   ],
-) <fig-arctor-learner-classifier>
+) <fig-Actor-learner-classifier>
 
 Zusätzlich wird die Methode *"Image Cropping"* verwendet, um Bilder auf eine Größe von 128×128 Pixeln zu verkleinern und sie auf relevante Bereiche zu beschränken.
 Eine direkte Nutzung von *Random Shift Augmentations*,  *Random Ensemble Distillation* oder anderer im Paper von Ball et. al. genannter Methoden, die als essenzielle Designentscheidung postuliert wurden, geht jedoch nicht hervor.

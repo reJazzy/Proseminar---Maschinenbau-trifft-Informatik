@@ -32,7 +32,7 @@
 - Reinforcment Learning with Prior Data (RLPD)
 - Fazit zum Paper
 
-= Flexible und intelligente Montage
+= Motivation
 
 == Problem der modernen Montage
 #slide()[
@@ -55,26 +55,100 @@
   Sind autonome und präzise Montagen möglich?
 ]
 
-== Configuration options, and a long slide title with font size automatically scaled to fit on one line
+= Lösung des Papers
 
-These are the default styles for *bold*, #alert[alert], and #link("https://typst.app")[hyperlink] text.
+== Präzisionsmontage mit RL & Bilder
 
-View the #link("https://github.com/benzipperer/metropolyst")[documentation] for all configuration options.
+#slide()[
+  #align(center)[
+    #figure(
+      image("/assets/1-s2.0-S0007850625000642-gr5_lrg.jpg", width: 70%),
+      caption: [
+        Montageaufbau (Montiert wird RAM, Kühlkörper und Lüfter) 
+      ]
+    )
+  ]
+]
 
-=== Example
+#slide()[
+  #align(center)[
+    #figure(
+      image("/assets/1-s2.0-S0007850625000642-gr7_lrg.jpg", width: 100%),
+      caption: [
+        Montageablauf (Einsetzen und Ausrichten) 
+      ]
+    )
+  ]
+]
 
-```typst
-#show: metropolyst-theme.with(
-  font: ("Roboto",),                       // Modern sans-serif
-  font-size: 22pt,                         // Slightly larger text
-  accent-color: rgb("#10b981"),            // Emerald accent
-  hyperlink-color: rgb("#0ea5e9"),         // Sky blue links
-  header-background-color: rgb("#0f172a"), // Slate dark header
-)
-#set strong(delta: 300)                    // Bolder bold text
-```
+#slide(composer: (1fr, auto, 1fr, auto, 1fr))[
+  // Spalte 1: Inhalt
+  
+  #align(center + horizon)[*Datenerhebung*]
 
-#text(
-  font: "Inter",
-  size: 22pt,
-)[These are the custom styles for #text(weight: "bold")[*bold*], #text(fill: rgb("#10b981"))[alert], and #link("https://typst.app")[#text(fill: rgb("#0ea5e9"))[hyperlink]] text.]
+  - Menschliche Demos
+
+  - Extraktion von Daten
+
+  - Einbettung in System
+
+  #image("/assets/{5ACD7CCA-29D6-431D-BBA0-684A514D3E8E}.png")
+  #v(1fr)
+][
+  // Spalte 2: Die Linie
+  // Wir machen sie grau und mittig
+  #align(center + horizon)[
+    #line(angle: 90deg, length: 80%, stroke: 1pt + gray)
+  ]
+][
+  // Spalte 3: Inhalt
+  #align(center + horizon)[*Reinforcement Learning*]
+
+  - RLPD (Prior Data)
+
+  - Actor & Critic
+
+  - Policy Optimierung
+
+  #image("/assets/{40C84E70-F758-4A87-B8D3-928527F9E2E0}.png")
+
+  #v(1fr)
+][
+  // Spalte 4: Die Linie
+  #align(center + horizon)[
+    #line(angle: 90deg, length: 80%, stroke: 1pt + gray)
+  ]
+][
+  // Spalte 5: Inhalt
+  #align(center + horizon)[*Impedanzcontroller*]
+
+  - Test
+
+  - Test
+
+  - Test
+
+  #v(1fr)
+]
+
+// These are the default styles for *bold*, #alert[alert], and #link("https://typst.app")[hyperlink] text.
+
+// View the #link("https://github.com/benzipperer/metropolyst")[documentation] for all configuration options.
+
+// === Example
+
+// ```typst
+// #show: metropolyst-theme.with(
+//   font: ("Roboto",),                       // Modern sans-serif
+//   font-size: 22pt,                         // Slightly larger text
+//   accent-color: rgb("#10b981"),            // Emerald accent
+//   hyperlink-color: rgb("#0ea5e9"),         // Sky blue links
+//   header-background-color: rgb("#0f172a"), // Slate dark header
+// )
+// #set strong(delta: 300)                    // Bolder bold text
+// ```
+
+// #text(
+//   font: "Inter",
+//   size: 22pt,
+// )[These are the custom styles for #text(weight: "bold")[*bold*], #text(fill: rgb("#10b981"))[alert], and #link("https://typst.app")[#text(fill: rgb("#0ea5e9"))[hyperlink]] text.]

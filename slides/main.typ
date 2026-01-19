@@ -1,8 +1,7 @@
 // Metropolyst Theme - Presentation Template
 // A highly configurable Metropolis-style theme for Touying
-
 #import "@preview/metropolyst:0.1.0": *
-
+// #show strong: set text(font: "Inter", weight: "bold")
 // Theme setup with default configuration
 // See README.md for all available options
 #show: metropolyst-theme.with(
@@ -104,7 +103,7 @@
   // Spalte 3: Inhalt
   #align(center + horizon)[*Reinforcement Learning*]
 
-  - RLPD (Prior Data)
+  - RLPD + HIL
 
   - Actor & Critic
 
@@ -122,14 +121,179 @@
   // Spalte 5: Inhalt
   #align(center + horizon)[*Impedanzcontroller*]
 
-  - Test
+  - Nachgiebigkeit
 
-  - Test
+  - $F = k dot e$
 
-  - Test
+  - RL + Physik
+
+  #align(center)[#image("/assets/{AE2EB6C5-9C71-4E24-AF1E-0C6ACB3153BD}.png", height: 6.3cm, width: 80%, fit: "stretch")]
 
   #v(1fr)
 ]
+
+= Markov-Decision-Process (MDP)
+
+== Markov-Decision-Process
+
+#slide()[
+- Vage Probleme werden zu berechenbare Mathematik 
+
+- $M = {S, A, P, R, gamma}$ 
+
+  - $S$ - Zustand
+  - $A$ - Entscheidung/Handlung
+  - $P$ - Wahrscheinlichkeit
+  - $R$ - Belohnung
+  - $gamma$ - Diskontfaktor
+
+- Ziel: Optimale Strategie $(pi)$ finden
+][
+  #align(center)[
+    #figure(
+      image("/assets/1_Pc0d35FGiksR31ySXoXv5A.png"),
+      caption: [
+        MDP Beispiel von Renu Khandelwal (inspiriert von David Silver)
+      ]
+    )
+  ]
+]
+
+#slide()[
+  #align(top)[$M = {S, A, P, R, gamma}$]
+
+  - $S$ (State): 2x RGB-Bilder + Roboter-Gelenkdaten + Griffstärke
+
+  - $A$ (Action): 6D-Pose (Position & Rotation) + Greifer-Status (Auf/Zu)
+
+  - $P$ (Probability): Sensorrauschen + Reibung + Widerstand + Toleranz
+
+  - $R$ (Reward): Neuronales Netz (Binary Classifier) + Menschliche Demos
+
+  - $gamma$ (Discount): Verhindert Divergenz + Weitsichtigkeit
+
+  #block(
+    fill: rgb("#f0f0f0"), // Ein leichter grauer Kasten
+    inset: 1em,
+    radius: 5pt,
+    width: 100%
+  )[
+    _Warum Reinforcement Learning für Policy $(pi)$?_ \
+
+    Da die Kontaktphysik $(P)$ und Bilddaten $(S)$ zu komplex für Formeln sind, muss der Roboter die Lösung *erlernen*.
+  ]
+]
+
+= Reinforcement Learning with Prior Data (RLPD)
+
+== RLPD
+#slide()[
+  #align(top)[#block(
+    fill: rgb("#f0f0f0"), // Ein leichter grauer Kasten
+    inset: 1em,
+    radius: 5pt,
+    width: 100%
+  )[RLPD entspringt dem Ansatz von Soft-Actor-Critic (SAC) mit essenziellen Designerweiterungen.]
+
+  1. Eine einfache und effiziente Methode zur Einbindung von Offline-Daten
+
+  2. Normalisierung von Ebenen zur Milderung von Überschätzungen
+
+  3. Effiziente Entnahme von Datenpunkten (Sample-Efficiency)
+  ]
+
+  #figure(
+      image("/assets/{1C8502F8-55F7-44E6-8D8C-887914087B67}.png", width: 75.8%),
+      caption: [
+        Vergleich verschiedener Algorithmen gegen RLPD von Ball et al.
+      ]
+    )
+]
+
+== RLPD - Zwei Buffer System
+
+#slide()[
+  - Richtungsfindung zu Beginn bei RL sehr Zeit- und Rechenintensiv
+
+  - Menschliche Demonstrationen oder suboptimale Policies können Richtung vorgeben (PD)
+
+  - Offline und Online Daten trennen
+
+    - Zwei Buffer + 50/50 Datenpunkte
+
+  - Umsetzung im Paper: Vorhanden
+][
+  #figure(
+      image("/Ausarbeitung/1-s2.0-S0007850625000642-gr3_lrg.jpg", width: 105%),
+      caption: [
+        Lui & Wang verwenden ebenfalls zwei Buffer
+      ]
+    )
+]
+
+== RLPD - Normalisierung
+
+#slide()[
+  - Out-of-Distribution (OOD) Daten bereiten RL-Algorithmen Probelme
+
+  - OOD-Daten können vom Critic stark "überschätzt" werden $arrow$ Divergenz
+
+  - Normalisierung in Ebenen von Neuronalen Netzen verhindert dies
+
+  - $norm(Q(s, a)) <= norm(w)$ - Netzwerkgewichte limitieren $Q$-Wert
+
+  - Umsetung im Paper: Implizit
+][
+  #figure(
+      image("/assets/{D8495648-5795-43D2-9027-671E9F83F38A}.png"),
+      caption: [
+        Reward Classifier gibt 1 und 0 aus
+      ]
+    )
+]
+
+== RLPD - Effizientes Samplen
+
+#slide()[
+  - Nutzung von zwei Buffern erhöht deutlich Aufbereitung von Daten
+
+  - Mögliche Gegenwirkungen 
+    - Erhöhung der Lerngeschwindikeit
+
+    - Qualitätsteigerung der Daten 
+
+  - Gefahr: Überanpassung (Overfitting)
+
+  - Präventionsmethoden nutzen
+
+    - Random Shift Augmentations
+
+    - Random Ensemble Distillation
+
+  - Umsetzung im Paper: Unklar
+][
+  #align(center)[
+    #figure(
+      image("/assets/2-3-2-augmentation_7_1.png", width: 80%),
+      caption: [
+        Beispiel für Random Shift Augmentations
+      ]
+    )
+
+  #figure(
+      image("/assets/unnamed.jpg", width: 80%),
+      caption: [
+        Beispiel für Image Cropping
+      ]
+    )
+  ]
+]
+
+= Fazit
+
+== Ergebnisse
+
+== Evaluation
 
 // These are the default styles for *bold*, #alert[alert], and #link("https://typst.app")[hyperlink] text.
 

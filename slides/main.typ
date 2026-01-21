@@ -37,7 +37,7 @@
 
 == Problem der modernen Montage
 #slide()[
-  - Autonome Montageprozesse sind verbeitet in der Industrie
+  - Autonome Montageprozesse sind verbreitet in der Industrie
 
   - Prozesse sind jedoch meist statisch und unflexibel
 
@@ -63,7 +63,7 @@
 #slide()[
   #align(center)[
     #figure(
-      image("/assets/1-s2.0-S0007850625000642-gr5_lrg.jpg", width: 70%),
+      image("assets/1-s2.0-S0007850625000642-gr5_lrg.jpg", width: 70%),
       caption: [
         Montageaufbau (Montiert wird RAM, Kühlkörper und Lüfter) - @liu_vision_2025
       ]
@@ -74,7 +74,7 @@
 #slide()[
   #align(center)[
     #figure(
-      image("/assets/1-s2.0-S0007850625000642-gr7_lrg.jpg", width: 100%),
+      image("assets/1-s2.0-S0007850625000642-gr7_lrg.jpg", width: 100%),
       caption: [
         Montageablauf (Einsetzen und Ausrichten) - @liu_vision_2025
       ]
@@ -93,7 +93,7 @@
 
   - Einbettung in System
 
-  #image("/assets/{5ACD7CCA-29D6-431D-BBA0-684A514D3E8E}.png")
+  #image("assets/{5ACD7CCA-29D6-431D-BBA0-684A514D3E8E}.png")
   #v(1fr)
 ][
   // Spalte 2: Die Linie
@@ -114,7 +114,7 @@
 
   - Policy Optimierung
 
-  #image("/assets/{40C84E70-F758-4A87-B8D3-928527F9E2E0}.png")
+  #image("assets/{40C84E70-F758-4A87-B8D3-928527F9E2E0}.png")
 
   #v(1fr)
   ]
@@ -136,7 +136,7 @@
 
   - RL + Physik
 
-  #align(center)[#image("/assets/{AE2EB6C5-9C71-4E24-AF1E-0C6ACB3153BD}.png", height: 6.3cm, width: 80%, fit: "stretch")]
+  #align(center)[#image("assets/{AE2EB6C5-9C71-4E24-AF1E-0C6ACB3153BD}.png", height: 6.3cm, width: 80%, fit: "stretch")]
 
   #v(1fr)
   ]
@@ -165,7 +165,7 @@
 ][
   #align(center)[
     #figure(
-      image("/assets/1_Pc0d35FGiksR31ySXoXv5A.png"),
+      image("assets/1_Pc0d35FGiksR31ySXoXv5A.png"),
       caption: [
         MDP als Graph eines Studentenlebens - @khandelwal_introduction_2022
       ]
@@ -223,7 +223,7 @@
   ]
 
   #figure(
-      image("/assets/{1C8502F8-55F7-44E6-8D8C-887914087B67}.png", width: 75.8%),
+      image("assets/{1C8502F8-55F7-44E6-8D8C-887914087B67}.png", width: 75.8%),
       caption: [
         Vergleich verschiedener Algorithmen gegen RLPD von Ball et al. - @ball_efficient_nodate
       ]
@@ -265,7 +265,7 @@
   - Umsetung im Paper: Implizit
 ][
   #figure(
-      image("/assets/{D8495648-5795-43D2-9027-671E9F83F38A}.png"),
+      image("assets/{D8495648-5795-43D2-9027-671E9F83F38A}.png"),
       caption: [
         Reward Classifier gibt 1 und 0 aus - @liu_vision_2025
       ]
@@ -294,23 +294,19 @@
 ][
   #align(center)[
     #figure(
-      image("/assets/2-3-2-augmentation_7_1.png", width: 80%),
+      image("assets/2-3-2-augmentation_7_1.png", width: 80%),
       caption: [
         Beispiel für Random Shift Augmentations - @thrun_issues_1994
       ]
     )
 
   #figure(
-      image("/assets/unnamed.jpg", width: 80%),
+      image("assets/unnamed.jpg", width: 80%),
       caption: [
         Beispiel für Image Cropping - Nano Banana Pro
       ]
     )
   ]
-]
-
-#focus-slide[
-  Wenn Code zur Bewegung wird
 ]
 
 = Fazit
@@ -332,14 +328,14 @@
 ][
   #align(center)[
     #figure(
-      image("/assets/1-s2.0-S0007850625000642-gr6_lrg.jpg", width: 100%),
+      image("assets/1-s2.0-S0007850625000642-gr6_lrg.jpg", width: 100%),
       caption: [
         Ergebnisse erfolgreicher Montage während Lernprozess - @liu_vision_2025
       ]
     )
 
   #figure(
-      image("/assets/{2EE64C7D-C5FB-4178-9851-FAF5A96ACBC6}.png"),
+      image("assets/{2EE64C7D-C5FB-4178-9851-FAF5A96ACBC6}.png"),
       caption: [
         Benötigte Zeit und Ressourcen von RLPD zum Erlernen - @liu_vision_2025
       ]
@@ -360,14 +356,14 @@
 ][
   #align(center)[
     #figure(
-      image("/assets/image1-4.png", width: 70%),
+      image("assets/image1-4.png", width: 70%),
       caption: [
         AlphaFold entschlüsselte 200 Millionen Proteine - @cheng_accurate_2023
       ]
     )
 
   #figure(
-      image("/assets/1856x1040.jpg", width: 70%),
+      image("assets/1856x1040.jpg", width: 70%),
       caption: [
         DeepMind steuert Tokamak zur Plasmaerzeugung - @noauthor_deepmind_2022
       ]

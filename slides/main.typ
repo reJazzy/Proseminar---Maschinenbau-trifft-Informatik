@@ -354,7 +354,7 @@
 
   - "Über der Computerwelt heraus Dinge bewegen" 
 
-  - Paper ist ein wunderbares Beispiel für Relevanz von Infromatik in Robotik
+  - Paper ist ein wunderbares Beispiel für Relevanz von Informatik in Robotik
 
   - Andere Bereiche benötigen ebenfalls qualifizierte Informatiker
 ][

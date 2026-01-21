@@ -341,7 +341,7 @@
   #figure(
       image("/assets/{2EE64C7D-C5FB-4178-9851-FAF5A96ACBC6}.png"),
       caption: [
-        Benötigte Zeit und Ressorucen von RLPD zum Erlernen - @liu_vision_2025
+        Benötigte Zeit und Ressourcen von RLPD zum Erlernen - @liu_vision_2025
       ]
     )
   ]

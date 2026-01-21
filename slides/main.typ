@@ -6,15 +6,14 @@
 // See README.md for all available options
 #show: metropolyst-theme.with(
   // Uncomment to customize:
-  font: ("Inter",),
+  font: ("Inter"),
   // accent-color: rgb("#eb811b"),
   // header-background-color: rgb("#23373b"),
   config-info(
     title: [Hybride Lernstrategien für dateneffiziente Robotik],
     author: [Jesse Marekwica],
     date: datetime.today(),
-    institution: [Proseminar: Infromatik trifft Maschinenbau],
-    logo: emoji.robot,
+    institution: [Proseminar: Informatik trifft Maschinenbau],
   ),
 )
 
@@ -27,15 +26,18 @@
 == Inhalt
 
 - Vorstellung des Papers
+
 - Markov-Decision-Process (MDP)
-- Reinforcment Learning with Prior Data (RLPD)
+
+- Reinforcement Learning with Prior Data (RLPD)
+
 - Fazit zum Paper
 
 = Motivation
 
 == Problem der modernen Montage
 #slide()[
-  - Autonome Montageprozesse sind weit verbeitet in der Industrie
+  - Autonome Montageprozesse sind verbeitet in der Industrie
 
   - Prozesse sind jedoch meist statisch und unflexibel
 
@@ -96,12 +98,15 @@
 ][
   // Spalte 2: Die Linie
   // Wir machen sie grau und mittig
-  #align(center + horizon)[
+  #uncover("2-")[
+    #align(center + horizon)[
     #line(angle: 90deg, length: 80%, stroke: 1pt + gray)
+    ]
   ]
 ][
   // Spalte 3: Inhalt
-  #align(center + horizon)[*Reinforcement Learning*]
+  #uncover("2-")[
+    #align(center + horizon)[*Reinforcement Learning*]
 
   - RLPD + HIL
 
@@ -112,14 +117,18 @@
   #image("/assets/{40C84E70-F758-4A87-B8D3-928527F9E2E0}.png")
 
   #v(1fr)
+  ]
 ][
   // Spalte 4: Die Linie
-  #align(center + horizon)[
+  #uncover(3)[
+    #align(center + horizon)[
     #line(angle: 90deg, length: 80%, stroke: 1pt + gray)
+  ]
   ]
 ][
   // Spalte 5: Inhalt
-  #align(center + horizon)[*Impedanzcontroller*]
+  #uncover(3)[
+    #align(center + horizon)[*Impedanzcontroller*]
 
   - Nachgiebigkeit
 
@@ -130,6 +139,7 @@
   #align(center)[#image("/assets/{AE2EB6C5-9C71-4E24-AF1E-0C6ACB3153BD}.png", height: 6.3cm, width: 80%, fit: "stretch")]
 
   #v(1fr)
+  ]
 ]
 
 #focus-slide[
@@ -176,7 +186,8 @@
 
   - $gamma$ (Discount): Verhindert Divergenz + Weitsichtigkeit
 
-  #block(
+  #uncover(2)[
+    #block(
     fill: rgb("#f0f0f0"), // Ein leichter grauer Kasten
     inset: 1em,
     radius: 5pt,
@@ -185,6 +196,7 @@
     _Warum Reinforcement Learning für Policy $(pi)$?_ \
 
     Da die Kontaktphysik $(P)$ und Bilddaten $(S)$ zu komplex für Formeln sind, muss der Roboter die Lösung *erlernen*.
+  ]
   ]
 ]
 
@@ -232,7 +244,7 @@
   - Umsetzung im Paper: Vorhanden
 ][
   #figure(
-      image("/Ausarbeitung/1-s2.0-S0007850625000642-gr3_lrg.jpg", width: 105%),
+      image("assets/1-s2.0-S0007850625000642-gr3_lrg.jpg", width: 105%),
       caption: [
         Lui & Wang verwenden ebenfalls zwei Buffer - @liu_vision_2025
       ]
@@ -242,7 +254,7 @@
 == RLPD - Normalisierung
 
 #slide()[
-  - Out-of-Distribution (OOD) Daten bereiten RL-Algorithmen Probelme
+  - Out-of-Distribution (OOD) Daten bereiten RL-Algorithmen Probleme
 
   - OOD-Daten können vom Critic stark "überschätzt" werden $arrow$ Divergenz
 
@@ -266,9 +278,9 @@
   - Nutzung von zwei Buffern erhöht deutlich Aufbereitung von Daten
 
   - Mögliche Gegenwirkungen 
-    - Erhöhung der Lerngeschwindikeit
+    - Höhere Lerngeschwindigkeit
 
-    - Qualitätsteigerung der Daten 
+    - Qualitätssteigerung der Daten 
 
   - Gefahr: Überanpassung (Overfitting)
 

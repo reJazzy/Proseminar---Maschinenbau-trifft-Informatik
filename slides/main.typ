@@ -383,14 +383,16 @@
     - _Wie wurde "Layer Normalization" umgesetzt?_
     - _Wie wurde "Overfitting" präventiert?_
     - _Wie genau wurden die Algorithmen verglichen (Unterschiede)?_
-
-  #block(
+    
+  #uncover(2)[
+    #block(
     fill: rgb("#f0f0f0"), // Ein leichter grauer Kasten
     inset: 1em,
     radius: 5pt,
     width: 100%
   )[
     [...] used to compare the training performance over these tasks and perform ablation studies with the same number of human demonstrations but different interventions. Specifically, BC, SAC and DP are trained with 100 human demonstrations, while HG-Dagger has the same number of interventions as RL @liu_vision_2025.
+  ]
   ]
 ]
 

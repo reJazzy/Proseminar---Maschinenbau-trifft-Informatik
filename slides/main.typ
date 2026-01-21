@@ -1,7 +1,7 @@
 // Metropolyst Theme - Presentation Template
 // A highly configurable Metropolis-style theme for Touying
 #import "@preview/metropolyst:0.1.0": *
-// #show strong: set text(font: "Inter", weight: "bold")
+#show strong: set text(font: "Inter", weight: "bold")
 // Theme setup with default configuration
 // See README.md for all available options
 #show: metropolyst-theme.with(
@@ -44,14 +44,14 @@
   #figure(
   image("fotos/KUKA_Production_2021_300_dpi_WEB-full.jpg"),
   caption: [
-    Fertigungsstraße in der Automobilindustrie mit KUKA-Robotern 
+    Fertigungsstraße in der Automobilindustrie - @noauthor_kr_nodate
     ]
   )
 ]
 
 // Focus slide for emphasis
 #focus-slide[
-  Sind autonome und präzise Montagen möglich?
+  Sind autonome, flexible und präzise Montagen möglich?
 ]
 
 = Lösung des Papers
@@ -63,7 +63,7 @@
     #figure(
       image("/assets/1-s2.0-S0007850625000642-gr5_lrg.jpg", width: 70%),
       caption: [
-        Montageaufbau (Montiert wird RAM, Kühlkörper und Lüfter) 
+        Montageaufbau (Montiert wird RAM, Kühlkörper und Lüfter) - @liu_vision_2025
       ]
     )
   ]
@@ -74,7 +74,7 @@
     #figure(
       image("/assets/1-s2.0-S0007850625000642-gr7_lrg.jpg", width: 100%),
       caption: [
-        Montageablauf (Einsetzen und Ausrichten) 
+        Montageablauf (Einsetzen und Ausrichten) - @liu_vision_2025
       ]
     )
   ]
@@ -132,6 +132,10 @@
   #v(1fr)
 ]
 
+#focus-slide[
+  Wie formulieren wir eine vage Problemstellung in etwas algorithmisch berechenbares?
+]
+
 = Markov-Decision-Process (MDP)
 
 == Markov-Decision-Process
@@ -153,7 +157,7 @@
     #figure(
       image("/assets/1_Pc0d35FGiksR31ySXoXv5A.png"),
       caption: [
-        MDP Beispiel von Renu Khandelwal (inspiriert von David Silver)
+        MDP als Graph eines Studentenlebens - @khandelwal_introduction_2022
       ]
     )
   ]
@@ -184,6 +188,10 @@
   ]
 ]
 
+#focus-slide[
+  Wie ist es möglich bei so hoher Datenkomplexität trotzdem Effizient bleiben?
+]
+
 = Reinforcement Learning with Prior Data (RLPD)
 
 == RLPD
@@ -205,7 +213,7 @@
   #figure(
       image("/assets/{1C8502F8-55F7-44E6-8D8C-887914087B67}.png", width: 75.8%),
       caption: [
-        Vergleich verschiedener Algorithmen gegen RLPD von Ball et al.
+        Vergleich verschiedener Algorithmen gegen RLPD von Ball et al. - @ball_efficient_nodate
       ]
     )
 ]
@@ -226,7 +234,7 @@
   #figure(
       image("/Ausarbeitung/1-s2.0-S0007850625000642-gr3_lrg.jpg", width: 105%),
       caption: [
-        Lui & Wang verwenden ebenfalls zwei Buffer
+        Lui & Wang verwenden ebenfalls zwei Buffer - @liu_vision_2025
       ]
     )
 ]
@@ -247,7 +255,7 @@
   #figure(
       image("/assets/{D8495648-5795-43D2-9027-671E9F83F38A}.png"),
       caption: [
-        Reward Classifier gibt 1 und 0 aus
+        Reward Classifier gibt 1 und 0 aus - @liu_vision_2025
       ]
     )
 ]
@@ -276,24 +284,103 @@
     #figure(
       image("/assets/2-3-2-augmentation_7_1.png", width: 80%),
       caption: [
-        Beispiel für Random Shift Augmentations
+        Beispiel für Random Shift Augmentations - @thrun_issues_1994
       ]
     )
 
   #figure(
       image("/assets/unnamed.jpg", width: 80%),
       caption: [
-        Beispiel für Image Cropping
+        Beispiel für Image Cropping - Nano Banana Pro
       ]
     )
   ]
+]
+
+#focus-slide[
+  Wenn Code zur Bewegung wird
 ]
 
 = Fazit
 
 == Ergebnisse
 
-== Evaluation
+#slide()[
+- Ergebnisse sind eindeutig
+
+- Über 98% erfolgreiche Montage mit RLPD + HIL
+
+- Verglichen wurde:
+  - Behaviour cloning (BC)
+  - Soft actor critic (SAC)
+  - Diffusion policy (DP)
+  - HG-Dagger
+
+- Alle wurden mit 100 "human demonstrations" trainiert, bis auf HG und RLPD $arrow$ "same number of interventions"
+][
+  #align(center)[
+    #figure(
+      image("/assets/1-s2.0-S0007850625000642-gr6_lrg.jpg", width: 100%),
+      caption: [
+        Ergebnisse erfolgreicher Montage während Lernprozess - @liu_vision_2025
+      ]
+    )
+
+  #figure(
+      image("/assets/{2EE64C7D-C5FB-4178-9851-FAF5A96ACBC6}.png"),
+      caption: [
+        Benötigte Zeit und Ressorucen von RLPD zum Erlernen - @liu_vision_2025
+      ]
+    )
+  ]
+]
+
+== Würdigung
+
+#slide()[
+  - Informatik wird in interdisziplinären Bereichen immer relevanter
+
+  - "Über der Computerwelt heraus Dinge bewegen" 
+
+  - Paper ist ein wunderbares Beispiel für Relevanz von Infromatik in Robotik
+
+  - Andere Bereiche benötigen ebenfalls qualifizierte Informatiker
+][
+  #align(center)[
+    #figure(
+      image("/assets/image1-4.png", width: 70%),
+      caption: [
+        AlphaFold entschlüsselte 200 Millionen Proteine - @cheng_accurate_2023
+      ]
+    )
+
+  #figure(
+      image("/assets/1856x1040.jpg", width: 70%),
+      caption: [
+        DeepMind steuert Tokamak zur Plasmaerzeugung - @noauthor_deepmind_2022
+      ]
+    )
+  ]
+]
+
+== Kritik
+
+#slide()[
+  - Erschwerte Validierung und Reproduzierbarkeit durch Informationslücken
+    - _Wann und wie wurde "Human-in-the-Loop" umgesetzt?_
+    - _Wie wurde "Layer Normalization" umgesetzt?_
+    - _Wie wurde "Overfitting" präventiert?_
+    - _Wie genau wurden die Algorithmen verglichen (Unterschiede)?_
+
+  #block(
+    fill: rgb("#f0f0f0"), // Ein leichter grauer Kasten
+    inset: 1em,
+    radius: 5pt,
+    width: 100%
+  )[
+    [...] used to compare the training performance over these tasks and perform ablation studies with the same number of human demonstrations but different interventions. Specifically, BC, SAC and DP are trained with 100 human demonstrations, while HG-Dagger has the same number of interventions as RL @liu_vision_2025.
+  ]
+]
 
 // These are the default styles for *bold*, #alert[alert], and #link("https://typst.app")[hyperlink] text.
 
@@ -316,3 +403,6 @@
 //   font: "Inter",
 //   size: 22pt,
 // )[These are the custom styles for #text(weight: "bold")[*bold*], #text(fill: rgb("#10b981"))[alert], and #link("https://typst.app")[#text(fill: rgb("#0ea5e9"))[hyperlink]] text.]
+// 
+
+#bibliography("quellen4.bib")
